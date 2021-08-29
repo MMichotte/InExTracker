@@ -11,22 +11,23 @@ userRoutes.get('/users', async (req, res) => {
 });
 
 userRoutes.post('/login', async (req, res, next) => {
-  const existingUser = await User.findOne({email: req.body.email});
-  
-  if (!existingUser) {
-    res.status(401).send('Wrong email or password');
-    return;
-  }
-
-  const validPassword = await bcryptService.comparePassword(req.body.password, existingUser.password);
-
-  if (!validPassword) {
-    res.status(401).send('Wrong email or password');
-    return;
-  }
-
-  //TODO -> return JWT
-  res.status(200).send('Successfully logged-in');
+  await User.findOne({ email: req.body.email })
+    .then(async existingUser => {
+      if (!existingUser) {
+        res.status(401).send('Wrong email or password');
+      } else {
+        const validPassword = await bcryptService.comparePassword(req.body.password, existingUser.password);
+        if (validPassword) {
+          //TODO -> return JWT
+          res.status(200).send('Successfully logged-in');
+        } else {
+          res.status(401).send('Wrong email or password');
+        }
+      }
+    })
+    .catch(err => {
+      console.log("Error : ", err.message);
+    });
 
 });
 
@@ -35,14 +36,27 @@ userRoutes.post('/signup', async (req, res) => {
     email: req.body.email,
     password: await bcryptService.hashPassword(req.body.password)
   });
-  await newUser
-    .save()
-    .then(() => {
-      res.status(200).send(newUser);
+  await User.findOne({ email: req.body.email })
+    .then(async existingUser => {
+      if (!existingUser) {
+        await newUser
+          .save()
+          .then(() => {
+            res.status(200).send(newUser);
+          })
+          .catch(err => {
+            console.log("Error is ", err.message);
+          });
+      }
+      else {
+        res.status(400).send('User already exists');
+      }
     })
     .catch(err => {
-      console.log("Error is ", err.message);
+      console.log("Error : ", err.message);
     });
+
+
 });
 
 export default userRoutes;
