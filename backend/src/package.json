@@ -7,8 +7,10 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node -r esm app.js",
-    "start:dev": "nodemon -r esm app.js"
+    "start": "node swagger.js && node -r esm app.js",
+    "start:dev": "node swagger.js && nodemon -r esm app.js",
+    "lint": "eslint",
+    "swagger-autogen": "node swagger.js"
   },
   "author": "Martin Michotte",
   "license": "ISC",
@@ -18,6 +20,11 @@
     "dotenv": "^10.0.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
-    "mongoose": "^6.0.2"
+    "mongoose": "^6.0.2",
+    "swagger-autogen": "^2.11.2",
+    "swagger-ui-express": "^4.1.6"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0"
   }
 }

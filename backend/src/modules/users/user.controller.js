@@ -2,8 +2,10 @@ import User from './user.model'
 import * as userService from './user.service'
 import * as bcryptService from '../../core/services/bcrypt.service'
 
-async function loginUser(req, res) {
 
+async function loginUser(req, res) {
+  // #swagger.tags = ['Auth']
+  
   if (!req.body.email || !req.body.password) {
     res.status(400).send();
     return;
@@ -31,6 +33,7 @@ async function loginUser(req, res) {
 }
 
 async function registerUser(req, res) {
+  // #swagger.tags = ['Users']
 
   //TODO ad more validation!
   if (!req.body.email || !req.body.password) {

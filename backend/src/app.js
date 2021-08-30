@@ -2,11 +2,13 @@ import express from 'express';
 import bodyParser from 'body-parser'
 import env from './config/env';
 import mongoose from 'mongoose';
+import swaggerUi from 'swagger-ui-express';
+import swaggerFile from './swagger_output.json';
 
 import userRoutes from './modules/users/user.routes';
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = env.PORT;
 
 // DATABASE CONNECTION
 mongoose
@@ -20,6 +22,9 @@ mongoose
 
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
+
+// SWAGGER
+app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
 // ROUTING
 app.use('/api/', [userRoutes]);

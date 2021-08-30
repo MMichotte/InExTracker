@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import mongoose from 'mongoose';
 
 const validateEmail = function(email) {

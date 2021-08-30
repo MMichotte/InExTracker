@@ -1,4 +1,3 @@
-
 import * as bcrypt from 'bcrypt';
 
 async function hashPassword(password) {

@@ -5,7 +5,7 @@ const userRoutes = express.Router()
 
 const routePrefix = '/users'
 
-userRoutes.post(`${routePrefix}/login`, userController.loginUser);
+userRoutes.post(`/login`, userController.loginUser);
 userRoutes.post(`${routePrefix}/signup`, userController.registerUser);
 
 export default userRoutes;
