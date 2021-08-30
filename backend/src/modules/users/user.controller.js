@@ -1,17 +1,15 @@
-import express from 'express'
-import createError from 'http-errors'
-import User from '../models/user.model.js'
-import * as bcryptService from '../services/bcrypt.service.js'
+import User from './user.model'
+import * as userService from './user.service'
+import * as bcryptService from '../../core/services/bcrypt.service'
 
-const userRoutes = express.Router()
+async function loginUser(req, res) {
 
-userRoutes.get('/users', async (req, res) => {
-  const users = await User.find().select("-password");
-  res.send(users);
-});
+  if (!req.body.email || !req.body.password) {
+    res.status(400).send();
+    return;
+  }
 
-userRoutes.post('/login', async (req, res, next) => {
-  await User.findOne({ email: req.body.email })
+  await userService.findOneByEmail(req.body.email)
     .then(async existingUser => {
       if (!existingUser) {
         res.status(401).send('Wrong email or password');
@@ -27,25 +25,35 @@ userRoutes.post('/login', async (req, res, next) => {
     })
     .catch(err => {
       console.log("Error : ", err.message);
+      res.status(500).send(err.message);
     });
 
-});
+}
 
-userRoutes.post('/signup', async (req, res) => {
+async function registerUser(req, res) {
+
+  //TODO ad more validation!
+  if (!req.body.email || !req.body.password) {
+    res.status(400).send();
+    return;
+  }
+
   const newUser = new User({
     email: req.body.email,
     password: await bcryptService.hashPassword(req.body.password)
   });
-  await User.findOne({ email: req.body.email })
+
+  await userService.findOneByEmail(newUser.email)
     .then(async existingUser => {
       if (!existingUser) {
-        await newUser
-          .save()
+
+        await userService.createOneUser(newUser)
           .then(() => {
             res.status(200).send(newUser);
           })
           .catch(err => {
             console.log("Error is ", err.message);
+            res.status(400).send(err.message);
           });
       }
       else {
@@ -54,9 +62,9 @@ userRoutes.post('/signup', async (req, res) => {
     })
     .catch(err => {
       console.log("Error : ", err.message);
+      res.status(500).send(err.message);
     });
 
+}
 
-});
-
-export default userRoutes;
+export { loginUser, registerUser }
