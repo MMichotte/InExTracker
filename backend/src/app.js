@@ -6,6 +6,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerFile from './swagger_output.json';
 
 import userRoutes from './modules/users/user.routes';
+import transactionRoutes from './modules/transactions/transaction.routes';
 
 const app = express();
 const port = env.PORT;
@@ -27,7 +28,7 @@ mongoose
 app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
 // ROUTING
-app.use('/api/', [userRoutes]);
+app.use('/api/', [userRoutes, transactionRoutes]);
 
 // SERVER
 app.listen(port, () => {

@@ -1,25 +1,29 @@
 import User from './user.model'
 import * as userService from './user.service'
 import * as bcryptService from '../../core/services/bcrypt.service'
+import generateJWT from '../../core/services/jwt.service'
 
 
 async function loginUser(req, res) {
   // #swagger.tags = ['Auth']
-  
-  if (!req.body.email || !req.body.password) {
+
+  const { email, password } = req.body;
+
+  if (!(email && password)) {
     res.status(400).send();
     return;
   }
 
-  await userService.findOneByEmail(req.body.email)
+  await userService.findOneByEmail(email)
     .then(async existingUser => {
       if (!existingUser) {
         res.status(401).send('Wrong email or password');
       } else {
-        const validPassword = await bcryptService.comparePassword(req.body.password, existingUser.password);
+        const validPassword = await bcryptService.comparePassword(password, existingUser.password);
         if (validPassword) {
           //TODO -> return JWT
-          res.status(200).send('Successfully logged-in');
+          const jwt = generateJWT(existingUser._id, existingUser.email);
+          res.status(200).send(jwt);
         } else {
           res.status(401).send('Wrong email or password');
         }
@@ -35,15 +39,17 @@ async function loginUser(req, res) {
 async function registerUser(req, res) {
   // #swagger.tags = ['Users']
 
+  const { email, password } = req.body;
+
   //TODO ad more validation!
-  if (!req.body.email || !req.body.password) {
+  if (!(email && password)) {
     res.status(400).send();
     return;
   }
 
   const newUser = new User({
-    email: req.body.email,
-    password: await bcryptService.hashPassword(req.body.password)
+    email: email,
+    password: await bcryptService.hashPassword(password)
   });
 
   await userService.findOneByEmail(newUser.email)
@@ -60,7 +66,7 @@ async function registerUser(req, res) {
           });
       }
       else {
-        res.status(400).send('User already exists');
+        res.status(409).send('User already exists, please login');
       }
     })
     .catch(err => {
