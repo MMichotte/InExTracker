@@ -14,7 +14,7 @@ const TransactionSchema = mongoose.Schema({
   },
   executionDate: {
     type: Date,
-    require: true
+    default: Date.now
   },
   repeat: {
     type: String,
@@ -31,7 +31,7 @@ const TransactionSchema = mongoose.Schema({
     enum: transactionTypes,
     require: false,
   },
-  user: {
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'users',
     require: true

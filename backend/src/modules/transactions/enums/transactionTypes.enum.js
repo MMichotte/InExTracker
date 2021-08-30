@@ -1,5 +1,7 @@
-export const transactionTypes = [
+const transactionTypes = [
   'Horeca',
   'Food',
   'Sports'
-]
+];
+
+export default transactionTypes;

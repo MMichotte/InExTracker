@@ -1,7 +1,7 @@
 import User from './user.model'
 import * as userService from './user.service'
 import * as bcryptService from '../../core/services/bcrypt.service'
-import generateJWT from '../../core/services/jwt.service'
+import * as JWTService from '../../core/services/jwt.service'
 
 
 async function loginUser(req, res) {
@@ -22,7 +22,7 @@ async function loginUser(req, res) {
         const validPassword = await bcryptService.comparePassword(password, existingUser.password);
         if (validPassword) {
           //TODO -> return JWT
-          const jwt = generateJWT(existingUser._id, existingUser.email);
+          const jwt = JWTService.generateJWT(existingUser.email, existingUser._id);
           res.status(200).send(jwt);
         } else {
           res.status(401).send('Wrong email or password');
@@ -56,7 +56,7 @@ async function registerUser(req, res) {
     .then(async existingUser => {
       if (!existingUser) {
 
-        await userService.createOneUser(newUser)
+        await userService.createOne(newUser)
           .then(() => {
             res.status(200).send(newUser);
           })

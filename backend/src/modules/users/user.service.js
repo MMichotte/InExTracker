@@ -4,8 +4,12 @@ async function findOneByEmail(email) {
   return await User.findOne({ email: email });
 }
 
-async function createOneUser(user) {
+async function findOneById(id) {
+  return await User.findById(id)
+}
+
+async function createOne(user) {
   return await user.save()
 }
 
-export { findOneByEmail, createOneUser }
+export { findOneByEmail, findOneById, createOne }
