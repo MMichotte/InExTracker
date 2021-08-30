@@ -1,6 +1,6 @@
 export const transactionRepeat = [
-  'Daily',
-  'Weekly',
-  'Monthly',
-  'Yearly'
+  'D',
+  'W',
+  'M',
+  'Y'
 ];

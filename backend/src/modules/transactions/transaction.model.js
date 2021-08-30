@@ -38,5 +38,5 @@ const TransactionSchema = mongoose.Schema({
   }
 });
 
-const Transaction = mongoose.model('users', TransactionSchema);
+const Transaction = mongoose.model('transactions', TransactionSchema);
 export default Transaction
