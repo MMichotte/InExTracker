@@ -25,7 +25,7 @@ async function loginUser(req, res) {
     })
     .catch(err => {
       console.log("Error : ", err.message);
-      res.status(500).send(err.message);
+      res.status(400).send(err.message);
     });
 
 }
@@ -62,7 +62,7 @@ async function registerUser(req, res) {
     })
     .catch(err => {
       console.log("Error : ", err.message);
-      res.status(500).send(err.message);
+      res.status(400).send(err.message);
     });
 
 }
