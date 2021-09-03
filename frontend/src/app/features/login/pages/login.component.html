@@ -1,41 +1,25 @@
 <div class="main">
     <form class="screen-center" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        
-        <div class="logo">
-            <img src="../../../../assets/img/SLG_logo.jpg" alt="Slg-logo">
-        </div>
 
-        <div class="field">
-            <p class="control has-icons-left">
-                <input class="input" type="email" placeholder="Email" formControlName="email" (click)="hideError()">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-envelope"></i>
-                </span>
-            </p>
-        </div>
-    
-        <div class="field">
-            <p class="control has-icons-left">
-                <input class="input" type="password" placeholder="Password" onfocus="this.value=''"
-                    formControlName="password" (click)="hideError()">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-lock"></i>
-                </span>
-            </p>
-        </div>
-    
-        <small class="formError" *ngIf="displayError">{{errorMsg}}</small>
+
+        <mat-form-field appearance="legacy">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" (click)="hideError()">
+            <mat-icon matSuffix fontSet="fas" fontIcon="fa-envelope"></mat-icon>
+        </mat-form-field>
         
-        <div class="field">
-            <p class="control">
-                <button class="button is-success" type="submit" [disabled]="!loginForm.valid" *ngIf="!displaySpinner">
-                    Login
-                </button>
-                <span class="spinner">
-                    <app-spinner [size]="'4rem'" *ngIf="displaySpinner"></app-spinner>
-                </span>
-            </p>
-        </div>
-    
+        <mat-form-field appearance="legacy">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password" onfocus="this.value=''" (click)="hideError()">
+            <mat-icon matSuffix fontSet="fas" fontIcon="fa-lock"></mat-icon>
+        </mat-form-field>
+
+        <small class="formError" *ngIf="displayError">{{errorMsg}}</small>
+
+        <button mat-stroked-button color="primary" type="submit" [disabled]="!loginForm.valid" *ngIf="!displaySpinner">Login</button>
+        <span class="spinner">
+            <app-spinner [size]="'4rem'" *ngIf="displaySpinner"></app-spinner>
+        </span>
+
     </form>
 </div>

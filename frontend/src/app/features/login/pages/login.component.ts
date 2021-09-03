@@ -1,4 +1,4 @@
-// import { AuthService } from '@core/services/auth.service';
+import { AuthService } from '@core/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -10,8 +10,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  // constructor (private auth: AuthService, private router: Router) { }
-  constructor (private router: Router) { }
+  constructor (private auth: AuthService, private router: Router) { }
 
     loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -23,11 +22,10 @@ export class LoginComponent implements OnInit {
     displaySpinner: boolean = false;
 
     ngOnInit (): void {
-      // this.auth.logout();
+      this.auth.logout();
     }
 
     onSubmit (): void {
-      /*
       this.displaySpinner = true;
       this.auth.loginUser(this.loginForm.value).subscribe(
         (res: any) => {
@@ -42,7 +40,7 @@ export class LoginComponent implements OnInit {
           this.displaySpinner = false;
           console.log(error);
         }
-      );*/
+      );
     }
 
     hideError (): void {
