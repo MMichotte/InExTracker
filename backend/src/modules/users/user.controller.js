@@ -21,9 +21,8 @@ async function loginUser(req, res) {
       } else {
         const validPassword = await bcryptService.comparePassword(password, existingUser.password);
         if (validPassword) {
-          //TODO -> return JWT
           const jwt = JWTService.generateJWT(existingUser.email, existingUser._id);
-          res.status(200).send(jwt);
+          res.status(200).send({token: jwt});
         } else {
           res.status(401).send('Wrong email or password');
         }
