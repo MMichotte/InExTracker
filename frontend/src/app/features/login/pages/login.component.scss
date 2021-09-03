@@ -11,32 +11,11 @@ form {
     width: 30rem;
     padding: 3rem;
     
-    .logo {
-        position: absolute;
-        top: -8rem;
-        
-        img {
-            width: 10rem;
-            border-radius: 20%;
-        }
-    }
-
-    .field {
-        width: 80%;
-        margin: 0.3rem 0;
-        
-        .control .button {
-            display: block;
-            margin: 0 auto;
-        }
-
-        .spinner{
-            display: flex;
-            justify-content: center;
-        }
-    }
-
     .formError {
         margin-bottom: 0.5rem;
     }
+}
+
+.fa-icon {
+    color: #673ab7;
 }

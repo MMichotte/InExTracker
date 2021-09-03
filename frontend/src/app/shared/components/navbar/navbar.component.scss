@@ -1,0 +1,43 @@
+.navbar {
+  
+  width: 100%;
+  height: 2.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #673ab7;
+  color: white;
+
+  .navbar-nav {
+    
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+
+    .nav-item {
+      font-size: larger;
+      padding: 0.75rem;
+      margin: 0.5rem;
+      border-radius: 5px;
+    }
+
+    .nav-item.active {
+      color:white;
+      background-color: #522e92;
+    }
+
+    .nav-item:hover {
+      color: #ffe082;
+      background-color: #522e92;
+      cursor: pointer;
+    }
+
+    .nav-item.last-child {
+      margin-left: auto;
+      margin-right: 3rem;
+    }
+
+  }
+  
+}
+
