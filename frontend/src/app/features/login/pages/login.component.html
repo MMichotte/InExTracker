@@ -1,22 +1,35 @@
 <div class="main">
     <form class="screen-center" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
+        <div class="field">
+            <label class="label">Email</label>
+            <div class="control has-icons-left">
+                <input class="input" type="email" placeholder="Email" formControlName="email"
+                    (click)="hideError()">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-envelope"></i>
+                </span>
+            </div>
+        </div>
 
-        <mat-form-field appearance="legacy">
-            <mat-label>Email</mat-label>
-            <input matInput type="email" formControlName="email" (click)="hideError()">
-            <mat-icon matSuffix fontSet="fas" fontIcon="fa-envelope" class="fa-icon"></mat-icon>
-        </mat-form-field>
-        
-        <mat-form-field appearance="legacy">
-            <mat-label>Password</mat-label>
-            <input matInput type="password" formControlName="password" onfocus="this.value=''" (click)="hideError()">
-            <mat-icon matSuffix fontSet="fas" fontIcon="fa-lock" class="fa-icon"></mat-icon>
-        </mat-form-field>
+        <div class="field">
+            <label class="label">Password</label>
+            <div class="control has-icons-left">
+                <input class="input" type="password" placeholder="Password" formControlName="password"
+                    onfocus="this.value=''" (click)="hideError()">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-key"></i>
+                </span>
+            </div>
+        </div>
 
+
+
+        <small class="signup">No account yet? <a href="">Sign up</a></small>
         <small class="formError" *ngIf="displayError">{{errorMsg}}</small>
 
-        <button mat-stroked-button color="primary" type="submit" [disabled]="!loginForm.valid" *ngIf="!displaySpinner">Login</button>
+        <button class="button is-primary" type="submit" [disabled]="!loginForm.valid"
+        *ngIf="!displaySpinner">Login</button>
         <span class="spinner">
             <app-spinner [size]="'4rem'" *ngIf="displaySpinner"></app-spinner>
         </span>

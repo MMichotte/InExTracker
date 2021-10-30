@@ -1,13 +1,66 @@
-.main {
 
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  align-items: center;
+.container {
+  width: 95%;
+  max-height: 100vh;
 
-  .fas {
-    font-size: xx-large;
-    color: var(--mainColor1);
+  .section {
+    max-height: 30%;
+    padding-top: 1rem;
+    padding-bottom: 0;
+
+    .head {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--quaternary);
+      padding-bottom: 0.5rem;
+
+      .title {
+        margin: 0;
+        font-size: x-large;
+        color: var(--secondary);
+      }
+
+    }
+
+    .content {
+      ul {
+        margin: 0.5rem 0;
+      }
+
+      li {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        span {
+          width: 30%;
+          text-align: center;
+        }
+
+        .col-title {
+          text-align: left;
+        }
+
+        .col-amount {
+          text-align: end;
+        }
+      }
+    }
+
   }
 
+}
+
+
+.controls {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  margin: 0;
+
+  .button {
+    width: 100%;
+  }
 }

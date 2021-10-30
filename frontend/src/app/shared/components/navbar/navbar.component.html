@@ -1,29 +1,37 @@
-<div class="navbar">
-  <ul class="navbar-nav">
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item nav-title">
+      InExTracker
+    </a>
 
-      <li class="nav-item" routerLinkActive="active" routerLink='home'>
-        <a class="nav-link">
-          <span class="nav-icon">
-            <i class="fas fa-home"></i>
-          </span>
-          <span class="link-text"> Home</span>
-        </a>
-      </li>
-      
-      <li class="nav-item" routerLinkActive="active" routerLink='dashboard'>
-        <a class="nav-link">
-          <span class="link-text"> Dashboard</span>
-        </a>
-      </li>
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="my-nav">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
 
-      <li class="nav-item last-child" *ngIf="auth.isLoggedIn()" (click)="onLogout()">
-        <a class="nav-link">
-          <span class="nav-icon">
-            <i class="fas fa-sign-out-alt"></i>
-          </span>
-          <span class="link-text"> Sign out</span>
+  <div id="my-nav" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" routerLinkActive="is-active" routerLink='home'>
+        <i class="fas fa-home"></i>
+        Home
+      </a>
+
+      <a class="navbar-item" routerLinkActive="is-active" routerLink='dashboard'>
+        Dashboard
+      </a>
+
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <a class="navbar-item" *ngIf="auth.isLoggedIn()" (click)="onLogout()">
+          <i class="fas fa-sign-out-alt"></i>
+          Sign out
         </a>
-      </li>
-      
-  </ul>
-</div>
+      </div>
+    </div>
+
+  </div>
+</nav>
