@@ -4,20 +4,41 @@ import * as userService from '../users/user.service'
 import * as JWTService from '../../core/services/jwt.service'
 
 async function getAllFromUserTransaction(req, res) {
+  // #swagger.tags = ['Transactions']
   const userId = JWTService.decodeJWT(req.headers['authorization']).user_id;
   res.send(await transactionService.getAllByUserId(userId));
+}
+
+async function getAllFromUserByMonthTransaction(req, res) {
+  // #swagger.tags = ['Transactions']
+  const userId = JWTService.decodeJWT(req.headers['authorization']).user_id;
+  res.send(await transactionService.getAllByUserId(userId));
+}
+
+async function getCurrentMonthBalance(req, res) {
+  // #swagger.tags = ['Transactions']
+  const userId = JWTService.decodeJWT(req.headers['authorization']).user_id;
+  res.send(await transactionService.getCurrentMonthBalanceByUserId(userId));
+}
+
+async function getGeneralBalance(req, res) {
+  // #swagger.tags = ['Transactions']
+  const userId = JWTService.decodeJWT(req.headers['authorization']).user_id;
+  res.send(await transactionService.getGeneralBalanceByUserId(userId));
 }
 
 async function createTransaction(req, res) {
   // #swagger.tags = ['Transactions']
 
-  const { title, amount, executionDate, repeat, description, tags, userId } = req.body;
+  const { title, amount, executionDate, repeat, description, tags } = req.body;
 
   //TODO ad more validation!
-  if (!(title && amount && userId)) {
+  if (!(title && amount)) {
     res.status(400).send();
     return;
   }
+
+  const userId = await JWTService.decodeJWT(req.headers.authorization).user_id;
 
   const newTransaction = new Transaction({
     title: title,
@@ -52,4 +73,4 @@ async function createTransaction(req, res) {
 
 }
 
-export { getAllFromUserTransaction, createTransaction }
+export { getAllFromUserTransaction, getAllFromUserByMonthTransaction, getCurrentMonthBalance, getGeneralBalance, createTransaction }
