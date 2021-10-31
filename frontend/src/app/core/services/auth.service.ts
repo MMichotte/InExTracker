@@ -15,6 +15,10 @@ export class AuthService {
   loginUser(userCredentials: any): Observable<HttpResponse<any>> {
     return this.httpClient.post<any>('/api/login', userCredentials);
   }
+  
+  signUpUser(userCredentials: any): Observable<HttpResponse<any>> {
+    return this.httpClient.post<any>('/api/users/signup', userCredentials);
+  }
 
   setLogin(token: string) {
     try {

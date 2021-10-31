@@ -25,7 +25,7 @@
 
 
 
-        <small class="signup">No account yet? <a href="">Sign up</a></small>
+        <small class="signup">No account yet? <a routerLink="/signup">Sign up</a></small>
         <small class="formError" *ngIf="displayError">{{errorMsg}}</small>
 
         <button class="button is-primary" type="submit" [disabled]="!loginForm.valid"

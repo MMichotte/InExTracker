@@ -1,0 +1,38 @@
+<div class="main">
+  <form class="screen-center" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+
+      <div class="field">
+          <label class="label">Email</label>
+          <div class="control has-icons-left">
+              <input class="input" type="email" placeholder="Email" formControlName="email"
+                  (click)="hideError()">
+              <span class="icon is-small is-left">
+                  <i class="fas fa-envelope"></i>
+              </span>
+          </div>
+      </div>
+
+      <div class="field">
+          <label class="label">Password</label>
+          <div class="control has-icons-left">
+              <input class="input" type="password" placeholder="Password" formControlName="password"
+                  onfocus="this.value=''" (click)="hideError()">
+              <span class="icon is-small is-left">
+                  <i class="fas fa-key"></i>
+              </span>
+          </div>
+      </div>
+
+
+
+      <small class="signup">No account yet? <a routerLink="/signup">Sign up</a></small>
+      <small class="formError" *ngIf="displayError">{{errorMsg}}</small>
+
+      <button class="button is-primary" type="submit" [disabled]="!signupForm.valid"
+      *ngIf="!displaySpinner">Sign Up</button>
+      <span class="spinner">
+          <app-spinner [size]="'4rem'" *ngIf="displaySpinner"></app-spinner>
+      </span>
+
+  </form>
+</div>

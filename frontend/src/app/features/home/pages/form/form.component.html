@@ -1,0 +1,69 @@
+<div class="main">
+  <form class="form" [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
+
+    <div class="field">
+      <label class="label">Title</label>
+      <div class="control">
+        <input class="input" type="text" formControlName="title">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Amount</label>
+      <div class="control">
+        <input class="input" type="number" formControlName="amount">
+      </div>
+    </div>
+
+
+    <div class="field">
+      <label class="label">Date</label>
+      <div class="control">
+        <input class="input" type="date" formControlName="executionDate">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Repetition</label>
+      <div class="control">
+        <label class="radio">
+          <input type="radio" name="repeat" value="" checked formControlName="repeat">
+          None
+        </label>
+        <label class="radio">
+          <input type="radio" name="repeat" value="D" formControlName="repeat">
+          Day
+        </label>
+        <label class="radio">
+          <input type="radio" name="repeat" value="W" formControlName="repeat">
+          Week
+        </label>
+        <label class="radio">
+          <input type="radio" name="repeat" value="M" formControlName="repeat">
+          Month
+        </label>
+        <label class="radio">
+          <input type="radio" name="repeat" value="Y" formControlName="repeat">
+          Year
+        </label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Description</label>
+      <div class="control">
+        <textarea class="textarea" formControlName="description"></textarea>
+      </div>
+    </div>
+
+
+    <div class="btn-group">
+      <button class="button is-danger" type="" routerLink="/home">Cancel</button>
+      <button class="button is-primary" type="submit">Add</button>
+    </div>
+    <span class="spinner">
+      <app-spinner [size]="'4rem'" *ngIf="displaySpinner"></app-spinner>
+    </span>
+
+  </form>
+</div>

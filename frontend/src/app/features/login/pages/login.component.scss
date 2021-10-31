@@ -3,6 +3,10 @@ form {
     flex-direction: column;
     align-items: center;
 
+    .control {
+        width: 20rem;
+    }
+
     .signup {
         margin-bottom: 0.5rem;
     }

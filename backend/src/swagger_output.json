@@ -142,23 +142,54 @@
         }
       }
     },
-    "/transactions/currentmonth-balance": {
+    "/transactions/{yearMonth}": {
       "get": {
         "tags": [
           "Transactions"
         ],
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "yearMonth",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {}
       }
     },
-    "/transactions/general-balance": {
+    "/transactions/currentmonth-balance/{yearMonth}": {
       "get": {
         "tags": [
           "Transactions"
         ],
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "yearMonth",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/transactions/general-balance/{yearMonth}": {
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "yearMonth",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {}
       }
     }

@@ -25,4 +25,8 @@ export class TransactionService {
     return this.httpClient.get(`${this.endpoint}/${yearMonth}`);
   }
 
+  createTransaction(transaction: any): any {
+    return this.httpClient.post(`${this.endpoint}`, transaction);
+  }
+
 }

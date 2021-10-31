@@ -1,6 +1,7 @@
 import { TransactionService } from './../../../transactions/services/transaction.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SimpleBalanceDTO } from '@features/transactions/dto/simple-balance.dto';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,8 @@ export class HomeComponent implements OnInit {
   incomes: any = [];
 
   constructor(
-    private readonly transactionService: TransactionService
+    private readonly transactionService: TransactionService,
+    private readonly router: Router
   ) { }
 
   ngOnInit(): void {
@@ -80,4 +82,7 @@ export class HomeComponent implements OnInit {
   }
 
 
+  public onAdd(): void {
+    this.router.navigate(['home/add'])
+  }
 }

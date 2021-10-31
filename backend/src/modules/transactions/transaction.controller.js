@@ -53,14 +53,84 @@ async function createTransaction(req, res) {
   await userService.findOneById(newTransaction.userId)
     .then(async existingUser => {
       if (existingUser) {
-        await transactionService.createOne(newTransaction)
-          .then(() => {
-            res.status(200).send(newTransaction);
-          })
-          .catch(err => {
-            console.log("Error is ", err.message);
-            res.status(400).send(err.message);
-          });
+        let transactions = [];
+        switch (newTransaction.repeat) {
+          case "D":
+            for (let i = 0; i < 365; i++) {
+              const newDate = new Date(newTransaction.executionDate.getFullYear(), newTransaction.executionDate.getMonth() + 1, newTransaction.executionDate.getDay()+ i);
+              const newTr = new Transaction({
+                title: newTransaction.title,
+                amount: newTransaction.amount,
+                executionDate: newDate,
+                repeat: newTransaction.repeat,
+                description: newTransaction.description,
+                tags: newTransaction.tags,
+                userId: userId
+              });
+              transactions.push(newTr);
+            }
+            break;
+          case "W":
+            for (let i = 0; i < 53; i++) {
+              const newDate = new Date(newTransaction.executionDate.getFullYear(), newTransaction.executionDate.getMonth() + 1, newTransaction.executionDate.getDay()+(i*7));
+              const newTr = new Transaction({
+                title: newTransaction.title,
+                amount: newTransaction.amount,
+                executionDate: newDate,
+                repeat: newTransaction.repeat,
+                description: newTransaction.description,
+                tags: newTransaction.tags,
+                userId: userId
+              });
+              transactions.push(newTr);
+            }
+            break;
+          case "M":
+            for (let i = 0; i < 12; i++) {
+              const newDate = new Date(newTransaction.executionDate.getFullYear(), newTransaction.executionDate.getMonth() +1 +i, newTransaction.executionDate.getDay());
+              const newTr = new Transaction({
+                title: newTransaction.title,
+                amount: newTransaction.amount,
+                executionDate: newDate,
+                repeat: newTransaction.repeat,
+                description: newTransaction.description,
+                tags: newTransaction.tags,
+                userId: userId
+              });
+              transactions.push(newTr);
+            }
+            break;
+          case "Y":
+            for (let i = 0; i < 5; i++) {
+              const newDate = new Date(newTransaction.executionDate.getFullYear() + i, newTransaction.executionDate.getMonth() + 1, newTransaction.executionDate.getDay());
+              const newTr = new Transaction({
+                title: newTransaction.title,
+                amount: newTransaction.amount,
+                executionDate: newDate,
+                repeat: newTransaction.repeat,
+                description: newTransaction.description,
+                tags: newTransaction.tags,
+                userId: userId
+              });
+              transactions.push(newTr);
+            }
+            break;
+        
+          default:
+            transactions.push(newTransaction);
+            break;
+        }
+        let promises = [];
+        transactions.forEach(tr => {
+          promises.push(transactionService.createOne(tr));
+        });
+        Promise.all(promises).then(() => {
+          res.status(200).send(promises[0]);
+        })
+        .catch(err => {
+          console.log("Error is ", err.message);
+          res.status(400).send(err.message);
+        });
       }
       else {
         res.status(409).send('User does not exist!');
