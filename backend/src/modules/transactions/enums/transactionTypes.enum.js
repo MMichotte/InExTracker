@@ -1,7 +1,8 @@
 const transactionTypes = [
   'Horeca',
   'Food',
-  'Sports'
+  'Sports',
+  'Other'
 ];
 
 export default transactionTypes;

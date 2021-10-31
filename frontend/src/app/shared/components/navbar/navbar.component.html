@@ -1,8 +1,8 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item nav-title">
+    <span class="navbar-item nav-title">
       InExTracker
-    </a>
+    </span>
 
     <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="my-nav">
       <span aria-hidden="true"></span>
@@ -25,12 +25,10 @@
     </div>
 
     <div class="navbar-end">
-      <div class="navbar-item">
         <a class="navbar-item" *ngIf="auth.isLoggedIn()" (click)="onLogout()">
           <i class="fas fa-sign-out-alt"></i>
           Sign out
         </a>
-      </div>
     </div>
 
   </div>

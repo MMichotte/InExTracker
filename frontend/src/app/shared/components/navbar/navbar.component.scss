@@ -1,8 +1,32 @@
+.navbar {
+  background-color: var(--primary);
+}
 
 .nav-title {
   font-size: x-large;
-  color: var(--primary)
+  color: var(--secondary);
+  font-weight: bold;
 }
+
+.is-active {
+  background-color: white !important;
+}
+
+.navbar-menu {
+
+  .navbar-item:hover {
+    background-color: var(--primary) !important;
+    color: white !important;
+    transition: 0.3s;
+  }
+  
+  .is-active.navbar-item:hover {
+    background-color: white !important;
+    color: var(--secondary) !important;
+  }
+}
+
+
 
 .fas {
   margin-right: 0.3rem;

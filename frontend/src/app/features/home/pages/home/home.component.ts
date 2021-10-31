@@ -10,8 +10,8 @@ import { SimpleBalanceDTO } from '@features/transactions/dto/simple-balance.dto'
 })
 export class HomeComponent implements OnInit {
   
-  calendarMonth = new Date();
-  currentMonth = (new Date()).toLocaleString("default", { month: "long" });
+  date = new Date();
+  selectedMonth: string = "";
   currentBalance: number = 0;
   cumulativeBalance: number = 0;
   expenses: any =  [];
@@ -22,15 +22,19 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    let month: any = this.date.getMonth() + 1;
+    month = (month < 10) ? (`0${month}`) : month;
+    this.selectedMonth = `${this.date.getFullYear()}-${month}`;
+
     this._getCurrentMonthBalance();
     this._getGeneralBalance();
-    this._getDetailAll()
+    this._getDetailByMonth();
   }
 
   private _getCurrentMonthBalance(): void {
-    this.transactionService.getCurrentMonthBalance().subscribe(
+    this.transactionService.getCurrentMonthBalance(this.selectedMonth).subscribe(
       (curBal: SimpleBalanceDTO) => {
-        this.currentBalance = curBal.balance;
+        this.currentBalance = +(curBal.balance).toFixed(2);
       },
       (error: any) => {
         console.log(error);
@@ -39,9 +43,9 @@ export class HomeComponent implements OnInit {
   }
 
   private _getGeneralBalance(): void {
-    this.transactionService.getGeneralBalance().subscribe(
+    this.transactionService.getGeneralBalance(this.selectedMonth).subscribe(
       (genBal: SimpleBalanceDTO) => {
-        this.cumulativeBalance = genBal.balance;
+        this.cumulativeBalance = +(genBal.balance).toFixed(2);
       },
       (error: any) => {
         console.log(error);
@@ -49,8 +53,8 @@ export class HomeComponent implements OnInit {
     );
   }
   
-  private _getDetailAll(): void {
-    this.transactionService.getDetailAll().subscribe(
+  private _getDetailByMonth(): void {
+    this.transactionService.getDetailByMonth(this.selectedMonth).subscribe(
       (transactions: any) => {
         transactions.forEach(tr => {
           if (tr.amount > 0) {
@@ -66,6 +70,14 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  public setDate(value: string): void {
+    this.selectedMonth = value;
+    this.incomes = [];
+    this.expenses = [];
+    this._getCurrentMonthBalance();
+    this._getGeneralBalance();
+    this._getDetailByMonth();
+  }
 
 
 }

@@ -1,12 +1,13 @@
 
 .container {
   width: 95%;
-  max-height: 100vh;
+  height: calc(100vh - 10rem);
+  padding-bottom: 1rem;
 
   .section {
-    max-height: 30%;
     padding-top: 1rem;
     padding-bottom: 0;
+    overflow-y: hidden;
 
     .head {
       display: flex;
@@ -25,6 +26,8 @@
     }
 
     .content {
+      height: 80%;
+      overflow-y: scroll;
       ul {
         margin: 0.5rem 0;
       }
@@ -39,6 +42,10 @@
           text-align: center;
         }
 
+        .col-main {
+          width: 50%;
+        }
+
         .col-title {
           text-align: left;
         }
@@ -51,6 +58,13 @@
 
   }
 
+  .section.first {
+   height: fit-content; 
+  }
+  .section.other {
+    height: 40%;
+  }
+
 }
 
 
@@ -59,8 +73,30 @@
   bottom: 0;
   width: 100%;
   margin: 0;
+  height: 2.5rem;
 
   .button {
     width: 100%;
   }
+}
+
+
+
+#datePicker {
+  border: 1px solid var(--secondary);
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: large;
+}
+::-webkit-datetime-edit {
+  text-align: center;
+}
+::-webkit-datetime-edit-fields-wrapper {}
+::-webkit-datetime-edit-text {}
+::-webkit-datetime-edit-month-field {}
+::-webkit-datetime-edit-day-field {}
+::-webkit-datetime-edit-year-field {}
+::-webkit-inner-spin-button {}
+::-webkit-calendar-picker-indicator {
+  cursor: pointer;
 }

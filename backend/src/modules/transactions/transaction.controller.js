@@ -12,19 +12,19 @@ async function getAllFromUserTransaction(req, res) {
 async function getAllFromUserByMonthTransaction(req, res) {
   // #swagger.tags = ['Transactions']
   const userId = JWTService.decodeJWT(req.headers['authorization']).user_id;
-  res.send(await transactionService.getAllByUserId(userId));
+  res.send(await transactionService.getAllByUserIdAndMonth(userId, req.params.yearMonth));
 }
 
 async function getCurrentMonthBalance(req, res) {
   // #swagger.tags = ['Transactions']
   const userId = JWTService.decodeJWT(req.headers['authorization']).user_id;
-  res.send(await transactionService.getCurrentMonthBalanceByUserId(userId));
+  res.send(await transactionService.getCurrentMonthBalanceByUserId(userId, req.params.yearMonth));
 }
 
 async function getGeneralBalance(req, res) {
   // #swagger.tags = ['Transactions']
   const userId = JWTService.decodeJWT(req.headers['authorization']).user_id;
-  res.send(await transactionService.getGeneralBalanceByUserId(userId));
+  res.send(await transactionService.getGeneralBalanceByUserId(userId, req.params.yearMonth));
 }
 
 async function createTransaction(req, res) {
