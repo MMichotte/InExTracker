@@ -7,7 +7,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node swagger.js && node -r esm app.js",
+    "start": "npm install && node -r esm app.js",
     "start:dev": "node swagger.js && nodemon -r esm app.js",
     "lint": "eslint",
     "swagger-autogen": "node swagger.js"
@@ -20,8 +20,11 @@
     "dotenv": "^10.0.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
+    "helmet": "^4.6.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.2",
+    "permissions-policy": "^0.6.0",
+    "pug": "^3.0.2",
     "swagger-autogen": "^2.11.2",
     "swagger-ui-express": "^4.1.6"
   },

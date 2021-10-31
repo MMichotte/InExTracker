@@ -1,0 +1,37 @@
+version: '2'
+
+services:
+
+  inextracker-db:
+    image: mongo
+    container_name: inextracker-db
+    restart: unless-stopped
+    ports:
+      - 27018:27017
+    volumes:
+      - './data:/data/db'
+    networks:
+      vps-martin-network:
+        ipv4_address: 192.168.10.30
+
+  inextracker-app:
+    depends_on: 
+      - inextracker-db
+    image: node:14.15.1
+    container_name: inextracker-app
+    restart: unless-stopped
+    volumes:
+      - ./app/www:/var/www
+    ports:
+      - 8001:8000
+    networks:
+      vps-martin-network:
+        ipv4_address: 192.168.10.31
+    command: bash -c "cd /var/www/src && npm run start"
+
+
+#--------------------
+
+networks:
+    vps-martin-network:
+      external: true
