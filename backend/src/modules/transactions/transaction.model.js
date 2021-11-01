@@ -21,6 +21,10 @@ const TransactionSchema = mongoose.Schema({
     enum: transactionRepeat,
     require: false
   },
+  initialTransactionId: {
+    type: String,
+    require: false
+  },
   description: {
     type: String,
     trim: true,

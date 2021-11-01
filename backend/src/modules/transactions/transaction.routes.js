@@ -11,5 +11,6 @@ transactionRoutes.get(`${routePrefix}/:yearMonth`, auth, transactionController.g
 transactionRoutes.get(`${routePrefix}/currentmonth-balance/:yearMonth`, auth, transactionController.getCurrentMonthBalance); 
 transactionRoutes.get(`${routePrefix}/general-balance/:yearMonth`, auth, transactionController.getGeneralBalance); 
 transactionRoutes.post(`${routePrefix}`, auth, transactionController.createTransaction); 
+transactionRoutes.delete(`${routePrefix}`, auth, transactionController.deleteTransaction); 
 
 export default transactionRoutes;

@@ -18,6 +18,8 @@ export class HomeComponent implements OnInit {
   expenses: any =  [];
   incomes: any = [];
 
+  selectedEntry: any = null;
+
   constructor(
     private readonly transactionService: TransactionService,
     private readonly router: Router
@@ -28,9 +30,12 @@ export class HomeComponent implements OnInit {
     month = (month < 10) ? (`0${month}`) : month;
     this.selectedMonth = `${this.date.getFullYear()}-${month}`;
 
-    this._getCurrentMonthBalance();
-    this._getGeneralBalance();
-    this._getDetailByMonth();
+    this._refreshData();
+  }
+
+
+  public setSelectedEntry(tr: any): void {
+    this.selectedEntry = tr
   }
 
   private _getCurrentMonthBalance(): void {
@@ -74,6 +79,27 @@ export class HomeComponent implements OnInit {
 
   public setDate(value: string): void {
     this.selectedMonth = value;
+    this._refreshData();
+  }
+
+
+  public onAdd(): void {
+    this.router.navigate(['home/add'])
+  }
+
+  public onDelete(): void {
+    this.transactionService.deleteTransaction(this.selectedEntry).subscribe(
+      (resp: any) => {
+        this.selectedEntry = null;
+        this._refreshData();
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
+  }
+
+  private _refreshData(): void {
     this.incomes = [];
     this.expenses = [];
     this._getCurrentMonthBalance();
@@ -81,8 +107,4 @@ export class HomeComponent implements OnInit {
     this._getDetailByMonth();
   }
 
-
-  public onAdd(): void {
-    this.router.navigate(['home/add'])
-  }
 }

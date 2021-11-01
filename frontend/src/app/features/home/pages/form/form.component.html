@@ -59,7 +59,8 @@
 
     <div class="btn-group">
       <button class="button is-danger" type="" routerLink="/home">Cancel</button>
-      <button class="button is-primary" type="submit">Add</button>
+      <button class="button is-warning" type="submit" (click)="setTransactionType('expense')">Expense</button>
+      <button class="button is-primary" type="submit" (click)="setTransactionType('revenue')">Revenue</button>
     </div>
     <span class="spinner">
       <app-spinner [size]="'4rem'" *ngIf="displaySpinner"></app-spinner>

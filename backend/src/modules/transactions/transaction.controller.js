@@ -53,16 +53,20 @@ async function createTransaction(req, res) {
   await userService.findOneById(newTransaction.userId)
     .then(async existingUser => {
       if (existingUser) {
+
+        const initialTransactionId = (await transactionService.createOne(newTransaction)).id;
+        
         let transactions = [];
         switch (newTransaction.repeat) {
           case "D":
-            for (let i = 0; i < 365; i++) {
-              const newDate = new Date(newTransaction.executionDate.getFullYear(), newTransaction.executionDate.getMonth() + 1, newTransaction.executionDate.getDay()+ i);
+            for (let i = 1; i < 365; i++) {
+              const newDate = new Date(newTransaction.executionDate.getFullYear(), newTransaction.executionDate.getMonth(), newTransaction.executionDate.getDate()+ i);
               const newTr = new Transaction({
                 title: newTransaction.title,
                 amount: newTransaction.amount,
                 executionDate: newDate,
                 repeat: newTransaction.repeat,
+                initialTransactionId: initialTransactionId,
                 description: newTransaction.description,
                 tags: newTransaction.tags,
                 userId: userId
@@ -71,13 +75,14 @@ async function createTransaction(req, res) {
             }
             break;
           case "W":
-            for (let i = 0; i < 53; i++) {
-              const newDate = new Date(newTransaction.executionDate.getFullYear(), newTransaction.executionDate.getMonth() + 1, newTransaction.executionDate.getDay()+(i*7));
+            for (let i = 1; i < 53; i++) {
+              const newDate = new Date(newTransaction.executionDate.getFullYear(), newTransaction.executionDate.getMonth(), newTransaction.executionDate.getDay()+(i*7));
               const newTr = new Transaction({
                 title: newTransaction.title,
                 amount: newTransaction.amount,
                 executionDate: newDate,
                 repeat: newTransaction.repeat,
+                initialTransactionId: initialTransactionId,
                 description: newTransaction.description,
                 tags: newTransaction.tags,
                 userId: userId
@@ -86,13 +91,14 @@ async function createTransaction(req, res) {
             }
             break;
           case "M":
-            for (let i = 0; i < 12; i++) {
-              const newDate = new Date(newTransaction.executionDate.getFullYear(), newTransaction.executionDate.getMonth() +1 +i, newTransaction.executionDate.getDay());
+            for (let i = 1; i < 12; i++) {
+              const newDate = new Date(newTransaction.executionDate.getFullYear(), newTransaction.executionDate.getMonth() + i, newTransaction.executionDate.getDate());
               const newTr = new Transaction({
                 title: newTransaction.title,
                 amount: newTransaction.amount,
                 executionDate: newDate,
                 repeat: newTransaction.repeat,
+                initialTransactionId: initialTransactionId,
                 description: newTransaction.description,
                 tags: newTransaction.tags,
                 userId: userId
@@ -102,12 +108,13 @@ async function createTransaction(req, res) {
             break;
           case "Y":
             for (let i = 0; i < 5; i++) {
-              const newDate = new Date(newTransaction.executionDate.getFullYear() + i, newTransaction.executionDate.getMonth() + 1, newTransaction.executionDate.getDay());
+              const newDate = new Date(newTransaction.executionDate.getFullYear() + i, newTransaction.executionDate.getMonth(), newTransaction.executionDate.getDate());
               const newTr = new Transaction({
                 title: newTransaction.title,
                 amount: newTransaction.amount,
                 executionDate: newDate,
                 repeat: newTransaction.repeat,
+                initialTransactionId: initialTransactionId,
                 description: newTransaction.description,
                 tags: newTransaction.tags,
                 userId: userId
@@ -117,7 +124,6 @@ async function createTransaction(req, res) {
             break;
         
           default:
-            transactions.push(newTransaction);
             break;
         }
         let promises = [];
@@ -125,7 +131,7 @@ async function createTransaction(req, res) {
           promises.push(transactionService.createOne(tr));
         });
         Promise.all(promises).then(() => {
-          res.status(200).send(promises[0]);
+          res.status(200).send([]); //TODO
         })
         .catch(err => {
           console.log("Error is ", err.message);
@@ -143,4 +149,18 @@ async function createTransaction(req, res) {
 
 }
 
-export { getAllFromUserTransaction, getAllFromUserByMonthTransaction, getCurrentMonthBalance, getGeneralBalance, createTransaction }
+async function deleteTransaction(req, res) {
+  // #swagger.tags = ['Transactions']
+
+  const transaction = req.body.transaction;
+  const deleteAll = req.body.deleteAll;
+
+  if(deleteAll) {
+    res.send(await transactionService.deleteAllTransaction(transaction));
+  } else {
+    res.send(await transactionService.deleteTransaction(transaction));
+  }
+
+}
+
+export { getAllFromUserTransaction, getAllFromUserByMonthTransaction, getCurrentMonthBalance, getGeneralBalance, createTransaction, deleteTransaction }

@@ -1,3 +1,4 @@
+import { Transaction } from './../../../transactions/models/transaction.model';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -24,20 +25,31 @@ export class FormComponent implements OnInit {
   })
 
   displaySpinner: boolean = false;
+  transactionType: string = '';
 
   ngOnInit(): void {
   }
 
+  public setTransactionType(type: string): void {
+    this.transactionType = type;
+  }
 
   onSubmit(): void {
     this.displaySpinner = true;
     let transaction = this.transactionForm.getRawValue();
+
+    if (this.transactionType === 'expense') {
+      transaction.amount  = (transaction.amount > 0)? transaction.amount * -1 : transaction.amount;
+    } else {
+      transaction.amount  = (transaction.amount > 0)? transaction.amount : transaction.amount * -1;
+    }
+
     if (transaction.repeat == '') {
       delete transaction.repeat;
     }
     this.transactionService.createTransaction(transaction).subscribe(
       (res: any) => {
-        console.log(res);
+        // console.log(res);
         this.router.navigate(['/home']);
       },
       (error: any) => {

@@ -6,13 +6,29 @@
     </div>
     <div class="content">
       <ul>
-        <li>
+        <li class="current-balance">
           <span class="col-title col-main">Current balance:</span>
           <span class="col-amount">{{currentBalance}} €</span>
         </li>
         <li>
           <span class="col-title col-main">Cumulative balance:</span>
           <span class="col-amount">{{cumulativeBalance}} €</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="section other incomes">
+    <div class="head">
+      <span class="title">Incomes</span>  
+      <span></span>
+    </div>
+    <div class="content">
+      <ul id="income-list">
+        <li *ngFor="let tr of incomes" (click)="setSelectedEntry(tr)" [ngClass]="{'selected-entry' : (selectedEntry == tr)}">
+          <span class="col-title">{{tr.title}} <i class="fas fa-history" *ngIf="tr.repeat"></i></span>
+          <span>{{tr.executionDate | date: 'EE - dd'}}</span>
+          <span class="col-amount">{{tr.amount}} €</span>
         </li>
       </ul>
     </div>
@@ -25,34 +41,20 @@
     </div>
     <div class="content">
       <ul id="expense-list">
-        <li *ngFor="let tr of expenses">
-          <span class="col-title">{{tr.title}}</span>
+        <li *ngFor="let tr of expenses" (click)="setSelectedEntry(tr)" [ngClass]="{'selected-entry' : (selectedEntry == tr)}">
+          <span class="col-title">{{tr.title}} <i class="fas fa-history" *ngIf="tr.repeat"></i></span>
           <span>{{tr.executionDate | date: 'EE - dd'}}</span>
           <span class="col-amount">{{tr.amount}} €</span>
         </li>
       </ul>
     </div>
   </div>
-
-  <div class="section other">
-    <div class="head">
-      <span class="title">Incomes</span>  
-      <span></span>
-    </div>
-    <div class="content">
-      <ul id="income-list">
-        <li *ngFor="let tr of incomes">
-          <span class="col-title">{{tr.title}}</span>
-          <span>{{tr.executionDate | date: 'EE - dd'}}</span>
-          <span class="col-amount">{{tr.amount}} €</span>
-        </li>
-      </ul>
-    </div>
-  </div>
-    
 </div>
 
 <div class="controls">
+  <button class="button is-danger" (click)="onDelete()"  [disabled]="!selectedEntry">
+    <i class="fas fa-trash"></i>
+  </button>
   <button class="button is-primary" (click)="onAdd()">
     <i class="fas fa-plus"></i>
   </button>

@@ -36,6 +36,7 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        padding: 0 0.5rem;
 
         span {
           width: 30%;
@@ -54,6 +55,12 @@
           text-align: end;
         }
       }
+
+      li.current-balance {
+        font-weight: bolder;
+        font-size: large;
+        border-bottom: 1px grey dotted;
+      }
     }
 
   }
@@ -64,9 +71,16 @@
   .section.other {
     height: 40%;
   }
+  .section.incomes {
+    height: 25%;
+  }
 
 }
 
+
+.repeat {
+  transform: scale(-1,1);
+}
 
 .controls {
   position: fixed;
@@ -74,13 +88,25 @@
   width: 100%;
   margin: 0;
   height: 2.5rem;
+  display: flex;
+  justify-content: space-around;
 
   .button {
-    width: 100%;
+    width: 48%;
   }
 }
 
+li:hover {
+  background-color: rgba(135, 223, 19, 0.411);
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 5px;
+}
 
+.selected-entry{
+  background-color: rgba(135, 223, 19, 0.411);
+  border-radius: 5px;
+}
 
 #datePicker {
   border: 1px solid var(--secondary);
