@@ -29,8 +29,8 @@ export class TransactionService {
     return this.httpClient.post(`${this.endpoint}`, transaction);
   }
   
-  deleteTransaction(transaction: any): any {
-    return this.httpClient.request('delete', `${this.endpoint}`, {body: {transaction: transaction, deleteAll: true}});
+  deleteTransaction(transaction: any, deleteAll: boolean): any {
+    return this.httpClient.request('delete', `${this.endpoint}`, {body: {transaction: transaction, deleteAll: deleteAll}});
   }
 
 }

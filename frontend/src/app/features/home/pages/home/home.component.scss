@@ -126,3 +126,8 @@ li:hover {
 ::-webkit-calendar-picker-indicator {
   cursor: pointer;
 }
+
+.modal-card-foot{
+  display: flex;
+  justify-content: space-between;
+}

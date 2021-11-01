@@ -140,6 +140,30 @@
             "description": "Conflict"
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "Transactions"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "transaction": {
+                  "example": "any"
+                },
+                "deleteAll": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {}
       }
     },
     "/transactions/{yearMonth}": {

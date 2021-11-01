@@ -59,3 +59,27 @@
     <i class="fas fa-plus"></i>
   </button>
 </div>
+
+
+<div class="modal" [ngClass]="{'is-active': showModal}">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Warning</p>
+      <button class="delete" aria-label="close" (click)="showModal = false"></button>
+    </header>
+    <section class="modal-card-body">
+      <span>
+        You are about to delete a recurring entry.
+        Do you whish to delete all its future entries?
+      </span>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button" (click)="showModal = false">Cancel</button>
+      <div>
+        <button class="button is-success" (click)="deleteEntry(false)">Just this one</button>
+        <button class="button is-warning" (click)="deleteEntry(true)">All future entries</button>
+      </div>
+    </footer>
+  </div>
+</div>

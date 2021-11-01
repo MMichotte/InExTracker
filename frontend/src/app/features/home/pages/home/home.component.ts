@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
   incomes: any = [];
 
   selectedEntry: any = null;
+  showModal: boolean = false;
 
   constructor(
     private readonly transactionService: TransactionService,
@@ -88,8 +89,16 @@ export class HomeComponent implements OnInit {
   }
 
   public onDelete(): void {
-    this.transactionService.deleteTransaction(this.selectedEntry).subscribe(
-      (resp: any) => {
+    if (this.selectedEntry.repeat) {
+      this.showModal = true;
+    } else {
+      this.deleteEntry(false);
+    }
+  }
+
+  public deleteEntry(deleteAll: boolean): void {
+    this.transactionService.deleteTransaction(this.selectedEntry,deleteAll).subscribe(
+      (res: any) => {
         this.selectedEntry = null;
         this._refreshData();
       },
@@ -97,6 +106,7 @@ export class HomeComponent implements OnInit {
         console.log(error);
       }
     );
+    this.showModal = false;
   }
 
   private _refreshData(): void {

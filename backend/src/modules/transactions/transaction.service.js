@@ -66,21 +66,23 @@ async function createOne(transaction) {
 
 async function deleteTransaction(transaction) {
   return await Transaction.deleteOne({
-    id: transaction._id
+    _id: transaction._id
   })
 }
 async function deleteAllTransaction(transaction) {
-
   const initTrId = transaction.initialTransactionId ? transaction.initialTransactionId : transaction._id;
 
   await deleteTransaction(transaction);
-  return await Transaction.deleteMany({
+  
+  await Transaction.deleteMany({
     initialTransactionId: initTrId,
     executionDate: {
       $gte: transaction.executionDate,
       $lt: new Date(2200, 1, 1)
     }
   });
+
+  return [];
 }
 
 export { getAllByUserId, getAllByUserIdAndMonth, getCurrentMonthBalanceByUserId, getGeneralBalanceByUserId, createOne, deleteTransaction, deleteAllTransaction }
