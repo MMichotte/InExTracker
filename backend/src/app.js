@@ -35,6 +35,8 @@ app.use(permissionsPolicy({
   }
 }));
 
+app.use(express.static(__dirname + '/../public/dist/frontend/'));
+
 // DATABASE CONNECTION
 mongoose
   .connect(env.DATABASE_URL)
@@ -47,19 +49,21 @@ mongoose
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
   
+  // SWAGGER
+  app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
   
-  app.use(express.static('../public/dist/frontend'))
-  app.set('view engine', 'pug');
+  // ROUTING
+  app.use('/api/', [userRoutes, transactionRoutes]);
   
   app.get('/', (req, res) => {
-      res.sendFile('index.html',{root:__dirname})
+    return res.sendFile(path
+      .join(__dirname + '/../public/dist/frontend/', 'index.html'))
   });
 
-// SWAGGER
-app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
-
-// ROUTING
-app.use('/api/', [userRoutes, transactionRoutes]);
+  app.get('*', (req, res) => {
+    return res.sendFile(path
+      .join(__dirname + '/../public/dist/frontend/', 'index.html'))
+  });
 
 // SERVER
 app.listen(port, () => {
