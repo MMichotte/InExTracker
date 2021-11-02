@@ -72,7 +72,7 @@
     height: 40%;
   }
   .section.incomes {
-    height: 25%;
+    height: 35%;
   }
 
 }
@@ -96,7 +96,7 @@
   }
 }
 
-li:hover {
+li.entry:hover {
   background-color: rgba(135, 223, 19, 0.411);
   cursor: pointer;
   transition: 0.3s;

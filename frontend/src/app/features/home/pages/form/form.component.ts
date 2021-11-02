@@ -18,7 +18,7 @@ export class FormComponent implements OnInit {
 
   transactionForm = new FormGroup({
     title: new FormControl('', Validators.required),
-    amount: new FormControl('', Validators.required),
+    amount: new FormControl(null, Validators.required),
     executionDate: new FormControl(this._formatDate(new Date()), Validators.required),
     repeat: new FormControl(''),
     description: new FormControl(''),
@@ -37,6 +37,12 @@ export class FormComponent implements OnInit {
   onSubmit(): void {
     this.displaySpinner = true;
     let transaction = this.transactionForm.getRawValue();
+
+    if (!transaction.amount) {
+
+    } else {
+      transaction.amount = +(((transaction.amount).toFixed(2)).replace(',','.'));
+    }
 
     if (this.transactionType === 'expense') {
       transaction.amount  = (transaction.amount > 0)? transaction.amount * -1 : transaction.amount;

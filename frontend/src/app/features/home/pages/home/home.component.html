@@ -25,7 +25,7 @@
     </div>
     <div class="content">
       <ul id="income-list">
-        <li *ngFor="let tr of incomes" (click)="setSelectedEntry(tr)" [ngClass]="{'selected-entry' : (selectedEntry == tr)}">
+        <li class="entry" *ngFor="let tr of incomes" (click)="setSelectedEntry(tr)" [ngClass]="{'selected-entry' : (selectedEntry == tr)}">
           <span class="col-title">{{tr.title}} <i class="fas fa-history" *ngIf="tr.repeat"></i></span>
           <span>{{tr.executionDate | date: 'EE - dd'}}</span>
           <span class="col-amount">{{tr.amount}} €</span>
@@ -41,7 +41,7 @@
     </div>
     <div class="content">
       <ul id="expense-list">
-        <li *ngFor="let tr of expenses" (click)="setSelectedEntry(tr)" [ngClass]="{'selected-entry' : (selectedEntry == tr)}">
+        <li class="entry" *ngFor="let tr of expenses" (click)="setSelectedEntry(tr)" [ngClass]="{'selected-entry' : (selectedEntry == tr)}">
           <span class="col-title">{{tr.title}} <i class="fas fa-history" *ngIf="tr.repeat"></i></span>
           <span>{{tr.executionDate | date: 'EE - dd'}}</span>
           <span class="col-amount">{{tr.amount}} €</span>

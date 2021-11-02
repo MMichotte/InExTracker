@@ -40,10 +40,13 @@ async function createTransaction(req, res) {
 
   const userId = await JWTService.decodeJWT(req.headers.authorization).user_id;
 
+  let transactionDate = new Date(executionDate);
+
   const newTransaction = new Transaction({
     title: title,
     amount: amount,
-    executionDate: executionDate,
+    executionDate: new Date(transactionDate.getFullYear(), transactionDate.getMonth() + 1, transactionDate.getDate(),
+        transactionDate.getHours(), transactionDate.getMinutes(), transactionDate.getSeconds(), transactionDate.getMilliseconds()),
     repeat: repeat,
     description: description,
     tags: tags,
