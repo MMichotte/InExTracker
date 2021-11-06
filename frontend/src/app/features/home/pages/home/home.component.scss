@@ -1,8 +1,8 @@
-
 .container {
   width: 95%;
-  height: calc(100vh - 10rem);
   padding-bottom: 1rem;
+  height: calc(100% - 52px - 2.5rem);
+  overflow-y: scroll;
 
   .section {
     padding-top: 1rem;
@@ -26,8 +26,7 @@
     }
 
     .content {
-      height: 80%;
-      overflow-y: scroll;
+
       ul {
         margin: 0.5rem 0;
       }
@@ -69,10 +68,10 @@
    height: fit-content; 
   }
   .section.other {
-    height: 40%;
+    //height: 40%;
   }
   .section.incomes {
-    height: 35%;
+    //height: 35%;
   }
 
 }
@@ -90,6 +89,7 @@
   height: 2.5rem;
   display: flex;
   justify-content: space-around;
+  background-color: white;
 
   .button {
     width: 48%;

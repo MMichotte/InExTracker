@@ -45,7 +45,7 @@ async function createTransaction(req, res) {
   const newTransaction = new Transaction({
     title: title,
     amount: amount,
-    executionDate: new Date(transactionDate.getFullYear(), transactionDate.getMonth() + 1, transactionDate.getDate(),
+    executionDate: new Date(transactionDate.getFullYear(), transactionDate.getMonth(), transactionDate.getDate(),
         transactionDate.getHours(), transactionDate.getMinutes(), transactionDate.getSeconds(), transactionDate.getMilliseconds()),
     repeat: repeat,
     description: description,

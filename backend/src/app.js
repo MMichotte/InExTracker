@@ -55,11 +55,6 @@ mongoose
   // ROUTING
   app.use('/api/', [userRoutes, transactionRoutes]);
   
-  app.get('/', (req, res) => {
-    return res.sendFile(path
-      .join(__dirname + '/../public/dist/frontend/', 'index.html'))
-  });
-
   app.get('*', (req, res) => {
     return res.sendFile(path
       .join(__dirname + '/../public/dist/frontend/', 'index.html'))
