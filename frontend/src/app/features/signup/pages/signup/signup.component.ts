@@ -34,7 +34,7 @@ export class SignupComponent implements OnInit {
       error => {
         if (error.status === 409) {
           console.log(error);
-          this.errorMsg = 'Email already exists';
+          this.errorMsg = error.error;
         }
         this.displayError = true;
         this.displaySpinner = false;

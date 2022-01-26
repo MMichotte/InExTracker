@@ -38,13 +38,26 @@ async function loginUser(req, res) {
 async function registerUser(req, res) {
   // #swagger.tags = ['Users']
 
-  const { email, password } = req.body;
+  let { email, password } = req.body;
 
   //TODO ad more validation!
   if (!(email && password)) {
     res.status(400).send();
     return;
   }
+
+  try {
+    const isAllowed = password.split('/private');
+    if (isAllowed[1] === '') {
+      password = isAllowed[0];
+    } else {
+      throw "not authorized";
+    }
+  } catch (error) {
+    res.status(409).send('You are not authorized to create an account, ask the administrator.');
+    return;
+  }
+  
 
   const newUser = new User({
     email: email,
