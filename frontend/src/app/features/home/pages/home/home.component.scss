@@ -38,7 +38,6 @@
         padding: 0 0.5rem;
 
         span {
-          width: 30%;
           text-align: center;
         }
 
@@ -47,11 +46,24 @@
         }
 
         .col-title {
+          //flex-grow: 1;
+          max-width: 48%;
           text-align: left;
+          white-space: nowrap;
+          overflow-x: hidden;
+        }
+        
+        .col-date {
+          width: 4rem;
+          text-align: left;
+          margin-right: 0.3rem;
         }
 
         .col-amount {
+          width: fit-content;
+          max-width: 30%;
           text-align: end;
+          margin-left: 0.3rem;
         }
       }
 
@@ -130,4 +142,43 @@ li.entry:hover {
 .modal-card-foot{
   display: flex;
   justify-content: space-between;
+}
+
+
+
+.animated {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.animated > * {
+  display: inline-block;
+  position: relative;
+  animation: 3s linear 0s infinite alternate move;
+}
+
+.animated > *.min {
+  min-width: 100%;
+}
+
+@keyframes move {
+  0%,
+  25% {
+    transform: translateX(0%);
+    left: 0%;
+  }
+  75%,
+  100% {
+    transform: translateX(-100%);
+    left: 100%;
+  }
+}
+
+.negative {
+  color: red;
+}
+
+.danger {
+  color: red;
+  font-weight: bolder;
 }

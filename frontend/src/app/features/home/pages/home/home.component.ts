@@ -1,3 +1,4 @@
+import { Transaction } from './../../../transactions/models/transaction.model';
 import { TransactionService } from './../../../transactions/services/transaction.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SimpleBalanceDTO } from '@features/transactions/dto/simple-balance.dto';
@@ -61,6 +62,12 @@ export class HomeComponent implements OnInit {
     );
   }
   
+  private _sortByDate(a: Transaction, b:Transaction) {
+    const aa:any = new Date(a.executionDate)
+    const bb:any = new Date(b.executionDate)
+    return  aa - bb;
+  }
+
   private _getDetailByMonth(): void {
     this.transactionService.getDetailByMonth(this.selectedMonth).subscribe(
       (transactions: any) => {
@@ -70,7 +77,10 @@ export class HomeComponent implements OnInit {
           } else {
             this.expenses.push(tr);
           }
+          tr.amount = tr.amount.toFixed(2);
         });
+        this.incomes.sort(this._sortByDate);
+        this.expenses.sort(this._sortByDate);
       },
       (error: any) => {
         console.log(error);

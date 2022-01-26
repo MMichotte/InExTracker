@@ -29,7 +29,6 @@ async function getGeneralBalance(req, res) {
 
 async function createTransaction(req, res) {
   // #swagger.tags = ['Transactions']
-
   const { title, amount, executionDate, repeat, description, tags } = req.body;
 
   //TODO ad more validation!
@@ -41,6 +40,8 @@ async function createTransaction(req, res) {
   const userId = await JWTService.decodeJWT(req.headers.authorization).user_id;
 
   let transactionDate = new Date(executionDate);
+
+  console.log(amount)
 
   const newTransaction = new Transaction({
     title: title,

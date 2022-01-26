@@ -1,5 +1,5 @@
 import { Transaction } from './../../../transactions/models/transaction.model';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TransactionService } from '@features/transactions/services/transaction.service';
@@ -14,7 +14,13 @@ export class FormComponent implements OnInit {
   constructor(
     private router: Router,
     private readonly transactionService: TransactionService,
+    private readonly cd: ChangeDetectorRef
   ) { }
+
+
+  titleError: string = '';
+  amountError: string = '';
+  amount: any;
 
   transactionForm = new FormGroup({
     title: new FormControl('', Validators.required),
@@ -35,14 +41,24 @@ export class FormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.displaySpinner = true;
-    let transaction = this.transactionForm.getRawValue();
+    this.titleError = '';
+    this.amountError = '';
 
-    if (!transaction.amount) {
+    const transaction = this.transactionForm.getRawValue();
 
-    } else {
-      transaction.amount = +(((transaction.amount).toFixed(2)).replace(',','.'));
+    if (!transaction.title || !transaction.amount) {
+      if (!transaction.title && !transaction.amount) {
+        this.titleError = 'This field is required.'
+        this.amountError = 'This field is required.'
+      } else if (!transaction.title){
+        this.titleError = 'This field is required.'
+      } else {
+        this.amountError = 'This field is required.'
+      }
+      return 
     }
+
+    transaction.amount = +(transaction.amount.replace(',','.'));
 
     if (this.transactionType === 'expense') {
       transaction.amount  = (transaction.amount > 0)? transaction.amount * -1 : transaction.amount;
@@ -53,6 +69,7 @@ export class FormComponent implements OnInit {
     if (transaction.repeat == '') {
       delete transaction.repeat;
     }
+
     this.transactionService.createTransaction(transaction).subscribe(
       (res: any) => {
         // console.log(res);
@@ -60,6 +77,7 @@ export class FormComponent implements OnInit {
       },
       (error: any) => {
         console.log(error);
+        this.amountError = 'Invalid amount. Ex: 23.56'
       }
     );
 

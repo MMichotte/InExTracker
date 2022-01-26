@@ -4,14 +4,17 @@
     <div class="field">
       <label class="label">Title</label>
       <div class="control">
-        <input class="input" type="text" formControlName="title">
+        <input id="input-title" class="input" type="text" formControlName="title">
+        <small id="title-error" class="error">{{titleError}}</small>
       </div>
     </div>
 
     <div class="field">
       <label class="label">Amount</label>
       <div class="control">
-        <input class="input" type="number" formControlName="amount">
+        <input id="input-amount" class="input" type="text" pattern="[0-9]*" inputmode="decimal" min="0" placeholder="0.00"
+        (click)="$event.target.select()" formControlName="amount">
+        <small id="amount-error" class="error">{{amountError}}</small>
       </div>
     </div>
 
