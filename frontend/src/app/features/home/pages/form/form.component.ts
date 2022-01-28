@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TransactionService } from '@features/transactions/services/transaction.service';
+import { TransactionTypes } from '@features/transactions/consts/transactionTypes';
 
 @Component({
   selector: 'app-form',
@@ -21,12 +22,14 @@ export class FormComponent implements OnInit {
   titleError: string = '';
   amountError: string = '';
   amount: any;
+  TransactionTypes = TransactionTypes;
 
   transactionForm = new FormGroup({
     title: new FormControl('', Validators.required),
     amount: new FormControl(null, Validators.required),
     executionDate: new FormControl(this._formatDate(new Date()), Validators.required),
     repeat: new FormControl(''),
+    tags: new FormControl(null),
     description: new FormControl(''),
   })
 
@@ -50,24 +53,28 @@ export class FormComponent implements OnInit {
       if (!transaction.title && !transaction.amount) {
         this.titleError = 'This field is required.'
         this.amountError = 'This field is required.'
-      } else if (!transaction.title){
+      } else if (!transaction.title) {
         this.titleError = 'This field is required.'
       } else {
         this.amountError = 'This field is required.'
       }
-      return 
+      return
     }
 
-    transaction.amount = +(transaction.amount.replace(',','.'));
+    transaction.amount = +(transaction.amount.replace(',', '.'));
 
     if (this.transactionType === 'expense') {
-      transaction.amount  = (transaction.amount > 0)? transaction.amount * -1 : transaction.amount;
+      transaction.amount = (transaction.amount > 0) ? transaction.amount * -1 : transaction.amount;
     } else {
-      transaction.amount  = (transaction.amount > 0)? transaction.amount : transaction.amount * -1;
+      transaction.amount = (transaction.amount > 0) ? transaction.amount : transaction.amount * -1;
     }
 
     if (transaction.repeat == '') {
       delete transaction.repeat;
+    }
+
+    if (transaction.tags) {
+      transaction.tags = transaction.tags.label;
     }
 
     this.transactionService.createTransaction(transaction).subscribe(

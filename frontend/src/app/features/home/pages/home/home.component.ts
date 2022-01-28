@@ -25,7 +25,13 @@ export class HomeComponent implements OnInit {
   constructor(
     private readonly transactionService: TransactionService,
     private readonly router: Router
-  ) { }
+  ) {
+    document.body.addEventListener('click', (e: any) => {
+      if(e.target.tagName !== 'LI') {
+        this.selectedEntry = null;
+      }
+    }, true); 
+  }
 
   ngOnInit(): void {
     let month: any = this.date.getMonth() + 1;

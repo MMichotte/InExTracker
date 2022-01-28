@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import transactionTypes from './enums/transactionTypes.enum'
+// import transactionTypes from './enums/transactionTypes.enum'
 import transactionRepeat from './enums/transactionRepeat.enum'
 
 const TransactionSchema = mongoose.Schema({
@@ -31,8 +31,7 @@ const TransactionSchema = mongoose.Schema({
     require: false,
   },
   tags: {
-    type: [String],
-    enum: transactionTypes,
+    type: String,
     require: false,
   },
   userId: {

@@ -60,8 +60,7 @@
         }
 
         .col-amount {
-          width: fit-content;
-          max-width: 30%;
+          width: 6rem;
           text-align: end;
           margin-left: 0.3rem;
         }
@@ -181,4 +180,8 @@ li.entry:hover {
 .danger {
   color: red;
   font-weight: bolder;
+}
+
+.hideDescpription {
+  display: none;
 }

@@ -51,6 +51,18 @@
         </label>
       </div>
     </div>
+    
+    <div class="field">
+      <label class="label">Tag</label>
+      <div class="control">
+        <div class="select">
+          <select formControlName="tags">
+            <option [ngValue]="null" disabled>Choose your tag</option>
+            <option *ngFor="let tag of TransactionTypes" [ngValue]="tag">{{tag.label}}</option>
+         </select>
+        </div>
+      </div>
+    </div>
 
     <div class="field">
       <label class="label">Description</label>

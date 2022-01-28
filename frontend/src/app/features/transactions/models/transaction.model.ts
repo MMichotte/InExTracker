@@ -1,4 +1,3 @@
-import { ETransactionTypes } from './../enums/transactionTypes.enum';
 import { ETransactionRepeat } from "../enums/transactionRepeat.enum";
 
 export class Transaction {
@@ -8,7 +7,7 @@ export class Transaction {
   executionDate: Date;
   repeat: ETransactionRepeat;
   description: string;
-  tags: ETransactionTypes[];
+  tags: string[];
   userId: string;
 
   constructor(obj?: Transaction) {
