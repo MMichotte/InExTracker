@@ -7,7 +7,7 @@ export class Transaction {
   executionDate: Date;
   repeat: ETransactionRepeat;
   description: string;
-  tags: string[];
+  tags: string;
   userId: string;
 
   constructor(obj?: Transaction) {

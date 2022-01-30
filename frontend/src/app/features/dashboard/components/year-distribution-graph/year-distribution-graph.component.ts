@@ -4,9 +4,9 @@ import { TransactionService } from '@features/transactions/services/transaction.
 import * as moment from 'moment';
 
 @Component({
-  selector: 'app-yearDistribution.graph',
-  templateUrl: './yearDistribution.graph.component.html',
-  styleUrls: ['./yearDistribution.graph.component.scss']
+  selector: 'app-year-distribution-graph',
+  templateUrl: './year-distribution-graph.component.html',
+  styleUrls: ['./year-distribution-graph.component.scss']
 })
 export class YearDistributionGraphComponent implements OnInit {
 
@@ -32,7 +32,7 @@ export class YearDistributionGraphComponent implements OnInit {
   data = [];
 
 
-  year: string = (new Date).getFullYear().toString();
+  year: string = moment().year().toString();
   months: string[] = moment.monthsShort();
   
   ngOnInit(): void {

@@ -1,9 +1,10 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TransactionService } from '@features/transactions/services/transaction.service';
-import { TransactionTags } from '@features/transactions/constants/transactionTags';
 import * as moment from 'moment';
+import { TransactionService } from '@features/transactions/services/transaction.service';
+import { TransactionExpenseTags } from '@features/transactions/constants/transactionExpenseTags';
+import { TransactionRevenueTags } from '@features/transactions/constants/transactionRevenueTags';
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
@@ -21,7 +22,8 @@ export class FormComponent implements OnInit {
   titleError: string = '';
   amountError: string = '';
   amount: any;
-  TransactionTags = TransactionTags;
+  TransactionExpenseTags = TransactionExpenseTags;
+  TransactionRevenueTags = TransactionRevenueTags;
   
 
   transactionForm = new FormGroup({
@@ -78,6 +80,7 @@ export class FormComponent implements OnInit {
       transaction.tags = transaction.tags.label;
     }
 
+    console.log(transaction.executionDate);
     transaction.executionDate = moment(transaction.executionDate);
 
     this.transactionService.createTransaction(transaction).subscribe(

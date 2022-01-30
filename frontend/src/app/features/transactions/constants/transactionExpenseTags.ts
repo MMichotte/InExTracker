@@ -1,4 +1,4 @@
-export const TransactionTags =  [
+export const TransactionExpenseTags =  [
   {
     label: 'Horeca',
     color: '#',
@@ -33,6 +33,10 @@ export const TransactionTags =  [
   },
   {
     label: 'Tourism',
+    color: '#',
+  },
+  {
+    label: 'Gift',
     color: '#',
   },
   {

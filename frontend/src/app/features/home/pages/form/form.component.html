@@ -65,7 +65,12 @@
         <div class="select">
           <select formControlName="tags">
             <option [ngValue]="null" disabled>Choose your tag</option>
-            <option *ngFor="let tag of TransactionTags" [ngValue]="tag">{{tag.label}}</option>
+            <optgroup label="Expenses">
+              <option *ngFor="let tag of TransactionExpenseTags" [ngValue]="tag">{{tag.label}}</option>
+            </optgroup>
+            <optgroup label="Revenues">
+              <option *ngFor="let tag of TransactionRevenueTags" [ngValue]="tag">{{tag.label}}</option>
+            </optgroup>
          </select>
         </div>
       </div>
