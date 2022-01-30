@@ -70,8 +70,8 @@ export class HomeComponent implements OnInit {
   }
   
   private _sortByDate(a: Transaction, b:Transaction) {
-    const aa:any = moment(a.executionDate)
-    const bb:any = moment(b.executionDate)
+    const aa:any = new Date(a.executionDate)
+    const bb:any = new Date(b.executionDate)
     return  aa - bb;
   }
 
