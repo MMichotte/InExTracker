@@ -47,13 +47,12 @@ async function createTransaction(req, res) {
 
   const userId = await JWTService.decodeJWT(req.headers.authorization).user_id;
 
-  const transactionDate = moment(executionDate);
   const endRepeatDate = moment(endDate);
 
   const newTransaction = new Transaction({
     title: title,
     amount: amount,
-    executionDate: transactionDate,
+    executionDate: moment(executionDate),
     repeat: repeat,
     description: description,
     tags: tags,
@@ -72,7 +71,7 @@ async function createTransaction(req, res) {
         switch (newTransaction.repeat) {
           case "D":
             while(true) {
-              const newDate = moment(transactionDate).add(i,'days');
+              const newDate = moment(executionDate).add(i,'days');
               if (newDate > endRepeatDate) {
                 break;
               }
@@ -92,7 +91,7 @@ async function createTransaction(req, res) {
             break;
           case "W":
             while(true) {
-              const newDate = moment(transactionDate).add(i, 'weeks');
+              const newDate = moment(executionDate).add(i, 'weeks');
               if (newDate > endRepeatDate) {
                 break;
               }
@@ -112,7 +111,7 @@ async function createTransaction(req, res) {
             break;
           case "M":
             while(true) {
-              const newDate = moment(transactionDate).add(i,'months');
+              const newDate = moment(executionDate).add(i,'months');
               if (newDate > endRepeatDate) {
                 break;
               }
@@ -132,7 +131,7 @@ async function createTransaction(req, res) {
             break;
           case "Y":
             while(true) {
-              const newDate = moment(transactionDate).add(i, 'years');
+              const newDate = moment(executionDate).add(i, 'years');
               if (newDate > endRepeatDate) {
                 break;
               }

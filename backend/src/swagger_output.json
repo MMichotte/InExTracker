@@ -119,7 +119,7 @@
                 "repeat": {
                   "example": "any"
                 },
-                "endRepeat": {
+                "endDate": {
                   "example": "any"
                 },
                 "description": {

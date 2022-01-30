@@ -9,7 +9,7 @@ async function getAllByUserIdAndYear(userId, year) {
   return await Transaction.find({
     userId: userId,
     executionDate: {
-      $gt: moment(year).startOf('year'),
+      $gte: moment(year).startOf('year'),
       $lte: moment(year).endOf('year')
     }
   });
@@ -19,7 +19,7 @@ async function getAllByUserIdAndMonth(userId, yearMonth) {
   return await Transaction.find({
     userId: userId,
     executionDate: {
-      $gt: moment(yearMonth).startOf('month'),
+      $gte: moment(yearMonth).startOf('month'),
       $lte: moment(yearMonth).endOf('month')
     }
   });
@@ -29,7 +29,7 @@ async function getCurrentMonthBalanceByUserId(userId, yearMonth) {
   const transactionAmounts = await Transaction.find({
     userId: userId,
     executionDate: {
-      $gt: moment(yearMonth).startOf('month'),
+      $gte: moment(yearMonth).startOf('month'),
       $lte: moment(yearMonth).endOf('month')
     }
   }).select('amount');
@@ -45,7 +45,7 @@ async function getGeneralBalanceByUserId(userId, yearMonth) {
   const transactionAmounts = await Transaction.find({
     userId: userId,
     executionDate: {
-      $gt: new Date(1900, 1, 1),
+      $gte: new Date(1900, 1, 1),
       $lte: moment(yearMonth).endOf('month')
     }
   }).select('amount');
