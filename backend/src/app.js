@@ -24,7 +24,7 @@ app.use(helmet.contentSecurityPolicy({
     'default-src': ['\'self\'', '\'unsafe-inline\'', 'blob:'],
     'object-src': ['\'self\'', '\'unsafe-inline\'', 'data:'],
     'img-src': ['\'self\'', '\'unsafe-inline\'', 'data:'],
-    'script-src': ['\'self\'', '\'unsafe-inline\'', '\'unsafe-eval\''],
+    'script-src': ['\'self\'', '\'unsafe-inline\'', '\'unsafe-eval\'', 'https://www.gstatic.com'],
     'script-src-attr': ['\'self\'', '\'unsafe-inline\'', '\'unsafe-eval\''],
   }
 }));

@@ -183,6 +183,23 @@
         "responses": {}
       }
     },
+    "/transactions/year/{year}": {
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "year",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
     "/transactions/currentmonth-balance/{yearMonth}": {
       "get": {
         "tags": [

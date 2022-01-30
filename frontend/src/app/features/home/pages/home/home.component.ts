@@ -27,7 +27,8 @@ export class HomeComponent implements OnInit {
     private readonly router: Router
   ) {
     document.body.addEventListener('click', (e: any) => {
-      if(e.target.tagName !== 'LI') {
+      console.log(e.target.tagName)
+      if(e.target.tagName !== 'LI' && e.target.tagName !== 'BUTTON' && e.target.tagName !== 'I') {
         this.selectedEntry = null;
       }
     }, true); 
