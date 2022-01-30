@@ -4,19 +4,19 @@ import { TransactionService } from '@features/transactions/services/transaction.
 import * as moment from 'moment';
 
 @Component({
-  selector: 'app-graphs',
-  templateUrl: './graphs.component.html',
-  styleUrls: ['./graphs.component.scss']
+  selector: 'app-yearDistribution.graph',
+  templateUrl: './yearDistribution.graph.component.html',
+  styleUrls: ['./yearDistribution.graph.component.scss']
 })
-export class GraphsComponent implements OnInit {
+export class YearDistributionGraphComponent implements OnInit {
 
   constructor(
-    private readonly transactionService: TransactionService,
+    private readonly transactionService: TransactionService
   ) { }
 
   title = 'Year Distribution of ';
   type = 'ComboChart';
-  columnNames = ['','Income','Expense','Net', 'Cumulative'];
+  columnNames = ['','Income', 'Expense', 'Net', 'Cumulative'];
   options = {
     hAxis: {
       title: 'Month'
@@ -28,8 +28,7 @@ export class GraphsComponent implements OnInit {
     colors: ['#348ceb', '#eb3434', '#24ad11', '#eb34b7'],
     series: { 3: { type: 'line' } }
   };
-  width = 1000;
-  height = 400;
+
   data = [];
 
 
@@ -54,18 +53,22 @@ export class GraphsComponent implements OnInit {
             data[2] = +data[2] + tr.amount;
           }
           data[3] = +data[3] + tr.amount;
-          try {
-            data[4] = this.data[month -1][4] + data[3];
-          } catch {
-            data[4] = data[3];
+        });
+        this.data.forEach((d, idx) => {
+          if (d[1] == 0 && d[2] == 0) {
+            d[1] = null;
+            d[2] = null;
+            d[3] = null;
+            d[4] = null;
+          } else {
+            if (idx > 0) {
+              d[4] = this.data[idx - 1][4] + d[3];
+            } else {
+              d[4] = d[3]
+            }
           }
         });
-        this.data = this.data.map(data => {
-          if (data[1] == 0 && data[2] == 0) {
-            return [data[0], null, null, null, null];
-          }
-          return data;
-        });
+        this.data = Object.assign([], this.data);
       },
       (error: any) => {
         console.log(error);
