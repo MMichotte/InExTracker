@@ -4,6 +4,18 @@ async function getAllByUserId(userId) {
   return await Transaction.find({ userId: userId });
 }
 
+async function getAllByUserIdAndYear(userId, year) {
+  const firstDay = new Date(+year, 0, 1);
+  const lastDay = new Date(+year + 1, 0, 1);
+  return await Transaction.find({
+    userId: userId,
+    executionDate: {
+      $gt: firstDay,
+      $lte: lastDay
+    }
+  });
+}
+
 async function getAllByUserIdAndMonth(userId, yearMonth) {
   const date = yearMonth.split('-');
   date[1] = +date[1] - 1;
@@ -85,4 +97,4 @@ async function deleteAllTransaction(transaction) {
   return [];
 }
 
-export { getAllByUserId, getAllByUserIdAndMonth, getCurrentMonthBalanceByUserId, getGeneralBalanceByUserId, createOne, deleteTransaction, deleteAllTransaction }
+export { getAllByUserId, getAllByUserIdAndYear, getAllByUserIdAndMonth, getCurrentMonthBalanceByUserId, getGeneralBalanceByUserId, createOne, deleteTransaction, deleteAllTransaction }

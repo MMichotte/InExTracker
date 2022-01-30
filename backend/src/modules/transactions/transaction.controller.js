@@ -9,6 +9,12 @@ async function getAllFromUserTransaction(req, res) {
   res.send(await transactionService.getAllByUserId(userId));
 }
 
+async function getAllFromUserByYearTransaction(req, res) {
+  // #swagger.tags = ['Transactions']
+  const userId = JWTService.decodeJWT(req.headers['authorization']).user_id;
+  res.send(await transactionService.getAllByUserIdAndYear(userId, req.params.year));
+}
+
 async function getAllFromUserByMonthTransaction(req, res) {
   // #swagger.tags = ['Transactions']
   const userId = JWTService.decodeJWT(req.headers['authorization']).user_id;
@@ -167,4 +173,4 @@ async function deleteTransaction(req, res) {
 
 }
 
-export { getAllFromUserTransaction, getAllFromUserByMonthTransaction, getCurrentMonthBalance, getGeneralBalance, createTransaction, deleteTransaction }
+export { getAllFromUserTransaction, getAllFromUserByYearTransaction, getAllFromUserByMonthTransaction, getCurrentMonthBalance, getGeneralBalance, createTransaction, deleteTransaction }

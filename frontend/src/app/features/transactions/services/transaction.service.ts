@@ -21,6 +21,10 @@ export class TransactionService {
     return this.httpClient.get(`${this.endpoint}`);
   }
 
+  getDetailByYear(year: string): any {
+    return this.httpClient.get(`${this.endpoint}/year/${year}`);
+  }
+
   getDetailByMonth(yearMonth: string): any {
     return this.httpClient.get(`${this.endpoint}/${yearMonth}`);
   }
