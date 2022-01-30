@@ -1,4 +1,4 @@
-export const TransactionTypes =  [
+export const TransactionTags =  [
   {
     label: 'Horeca',
     color: '#',

@@ -3,6 +3,7 @@ import { TransactionService } from './../../../transactions/services/transaction
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SimpleBalanceDTO } from '@features/transactions/dto/simple-balance.dto';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   
-  date = new Date();
+  date = moment();
   selectedMonth: string = "";
   currentBalance: number = 0;
   cumulativeBalance: number = 0;
@@ -34,10 +35,10 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let month: any = this.date.getMonth() + 1;
+    let month: any = this.date.month() + 1;
     month = (month < 10) ? (`0${month}`) : month;
-    this.selectedMonth = `${this.date.getFullYear()}-${month}`;
-
+    this.selectedMonth = `${this.date.year()}-${month}`;
+    
     this._refreshData();
   }
 
@@ -69,8 +70,8 @@ export class HomeComponent implements OnInit {
   }
   
   private _sortByDate(a: Transaction, b:Transaction) {
-    const aa:any = new Date(a.executionDate)
-    const bb:any = new Date(b.executionDate)
+    const aa:any = moment(a.executionDate)
+    const bb:any = moment(b.executionDate)
     return  aa - bb;
   }
 

@@ -119,6 +119,9 @@
                 "repeat": {
                   "example": "any"
                 },
+                "endRepeat": {
+                  "example": "any"
+                },
                 "description": {
                   "example": "any"
                 },
@@ -166,23 +169,6 @@
         "responses": {}
       }
     },
-    "/transactions/{yearMonth}": {
-      "get": {
-        "tags": [
-          "Transactions"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "yearMonth",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {}
-      }
-    },
     "/transactions/year/{year}": {
       "get": {
         "tags": [
@@ -200,7 +186,24 @@
         "responses": {}
       }
     },
-    "/transactions/currentmonth-balance/{yearMonth}": {
+    "/transactions/yearMonth/{yearMonth}": {
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "yearMonth",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/transactions/month-balance/{yearMonth}": {
       "get": {
         "tags": [
           "Transactions"

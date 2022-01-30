@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-// import transactionTypes from './enums/transactionTypes.enum'
 import transactionRepeat from './enums/transactionRepeat.enum'
+import moment from 'moment';
 
 const TransactionSchema = mongoose.Schema({
   title: {
@@ -14,7 +14,7 @@ const TransactionSchema = mongoose.Schema({
   },
   executionDate: {
     type: Date,
-    default: Date.now
+    default: moment()
   },
   repeat: {
     type: String,

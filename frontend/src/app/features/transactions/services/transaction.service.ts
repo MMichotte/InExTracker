@@ -11,7 +11,7 @@ export class TransactionService {
   constructor(private readonly httpClient: HttpClient) { }
 
   getCurrentMonthBalance(yearMonth: string): any {
-    return this.httpClient.get(`${this.endpoint}/currentmonth-balance/${yearMonth}`);
+    return this.httpClient.get(`${this.endpoint}/month-balance/${yearMonth}`);
   }
   getGeneralBalance(yearMonth: string): any {
     return this.httpClient.get(`${this.endpoint}/general-balance/${yearMonth}`);
@@ -26,7 +26,7 @@ export class TransactionService {
   }
 
   getDetailByMonth(yearMonth: string): any {
-    return this.httpClient.get(`${this.endpoint}/${yearMonth}`);
+    return this.httpClient.get(`${this.endpoint}/yearMonth/${yearMonth}`);
   }
 
   createTransaction(transaction: any): any {

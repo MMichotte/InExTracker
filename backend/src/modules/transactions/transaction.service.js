@@ -1,47 +1,36 @@
 import Transaction from './transaction.model'
+import moment from 'moment'
 
 async function getAllByUserId(userId) {
   return await Transaction.find({ userId: userId });
 }
 
 async function getAllByUserIdAndYear(userId, year) {
-  const firstDay = new Date(+year, 0, 1);
-  const lastDay = new Date(+year + 1, 0, 1);
   return await Transaction.find({
     userId: userId,
     executionDate: {
-      $gt: firstDay,
-      $lte: lastDay
+      $gt: moment(year).startOf('year'),
+      $lte: moment(year).endOf('year')
     }
   });
 }
 
 async function getAllByUserIdAndMonth(userId, yearMonth) {
-  const date = yearMonth.split('-');
-  date[1] = +date[1] - 1;
-  const firstDay = new Date(+date[0], date[1], 1);
-  const lastDay = new Date(+date[0], date[1] + 1, 1);
-
   return await Transaction.find({
     userId: userId,
     executionDate: {
-      $gt: firstDay,
-      $lte: lastDay
+      $gt: moment(yearMonth).startOf('month'),
+      $lte: moment(yearMonth).endOf('month')
     }
   });
 }
 
 async function getCurrentMonthBalanceByUserId(userId, yearMonth) {
-  const date = yearMonth.split('-');
-  date[1] = +date[1] - 1;
-  const firstDay = new Date(+date[0], date[1], 1);
-  const lastDay = new Date(+date[0], date[1] + 1, 1);
-
   const transactionAmounts = await Transaction.find({
     userId: userId,
     executionDate: {
-      $gt: firstDay,
-      $lte: lastDay
+      $gt: moment(yearMonth).startOf('month'),
+      $lte: moment(yearMonth).endOf('month')
     }
   }).select('amount');
 
@@ -53,15 +42,11 @@ async function getCurrentMonthBalanceByUserId(userId, yearMonth) {
 }
 
 async function getGeneralBalanceByUserId(userId, yearMonth) {
-  const date = yearMonth.split('-');
-  date[1] = +date[1] - 1;
-  const lastDay = new Date(+date[0], date[1] + 1, 1);
-
   const transactionAmounts = await Transaction.find({
     userId: userId,
     executionDate: {
       $gt: new Date(1900, 1, 1),
-      $lte: lastDay
+      $lte: moment(yearMonth).endOf('month')
     }
   }).select('amount');
 
@@ -85,7 +70,7 @@ async function deleteAllTransaction(transaction) {
   const initTrId = transaction.initialTransactionId ? transaction.initialTransactionId : transaction._id;
 
   await deleteTransaction(transaction);
-  
+
   await Transaction.deleteMany({
     initialTransactionId: initTrId,
     executionDate: {

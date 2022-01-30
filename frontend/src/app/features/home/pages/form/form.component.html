@@ -51,6 +51,13 @@
         </label>
       </div>
     </div>
+
+    <div class="field" *ngIf="(transactionForm.controls['repeat'].value !== '')">
+      <label class="label">End Date</label>
+      <div class="control">
+        <input class="input" type="date" formControlName="endDate">
+      </div>
+    </div>
     
     <div class="field">
       <label class="label">Tag</label>
@@ -58,7 +65,7 @@
         <div class="select">
           <select formControlName="tags">
             <option [ngValue]="null" disabled>Choose your tag</option>
-            <option *ngFor="let tag of TransactionTypes" [ngValue]="tag">{{tag.label}}</option>
+            <option *ngFor="let tag of TransactionTags" [ngValue]="tag">{{tag.label}}</option>
          </select>
         </div>
       </div>

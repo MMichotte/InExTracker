@@ -1,4 +1,6 @@
+/* eslint-disable no-constant-condition */
 import Transaction from './transaction.model'
+import moment from 'moment'
 import * as transactionService from './transaction.service'
 import * as userService from '../users/user.service'
 import * as JWTService from '../../core/services/jwt.service'
@@ -35,7 +37,7 @@ async function getGeneralBalance(req, res) {
 
 async function createTransaction(req, res) {
   // #swagger.tags = ['Transactions']
-  const { title, amount, executionDate, repeat, description, tags } = req.body;
+  const { title, amount, executionDate, repeat, endDate, description, tags } = req.body;
 
   //TODO ad more validation!
   if (!(title && amount)) {
@@ -45,15 +47,13 @@ async function createTransaction(req, res) {
 
   const userId = await JWTService.decodeJWT(req.headers.authorization).user_id;
 
-  let transactionDate = new Date(executionDate);
-
-  console.log(amount)
+  const transactionDate = moment(executionDate);
+  const endRepeatDate = moment(endDate);
 
   const newTransaction = new Transaction({
     title: title,
     amount: amount,
-    executionDate: new Date(transactionDate.getFullYear(), transactionDate.getMonth(), transactionDate.getDate(),
-        transactionDate.getHours(), transactionDate.getMinutes(), transactionDate.getSeconds(), transactionDate.getMilliseconds()),
+    executionDate: transactionDate,
     repeat: repeat,
     description: description,
     tags: tags,
@@ -67,10 +67,15 @@ async function createTransaction(req, res) {
         const initialTransactionId = (await transactionService.createOne(newTransaction)).id;
         
         let transactions = [];
+        let i = 1;
+        
         switch (newTransaction.repeat) {
           case "D":
-            for (let i = 1; i < 365; i++) {
-              const newDate = new Date(newTransaction.executionDate.getFullYear(), newTransaction.executionDate.getMonth(), newTransaction.executionDate.getDate()+ i);
+            while(true) {
+              const newDate = moment(transactionDate).add(i,'days');
+              if (newDate > endRepeatDate) {
+                break;
+              }
               const newTr = new Transaction({
                 title: newTransaction.title,
                 amount: newTransaction.amount,
@@ -82,11 +87,15 @@ async function createTransaction(req, res) {
                 userId: userId
               });
               transactions.push(newTr);
+              i += 1;
             }
             break;
           case "W":
-            for (let i = 1; i < 53; i++) {
-              const newDate = new Date(newTransaction.executionDate.getFullYear(), newTransaction.executionDate.getMonth(), newTransaction.executionDate.getDay()+(i*7));
+            while(true) {
+              const newDate = moment(transactionDate).add(i, 'weeks');
+              if (newDate > endRepeatDate) {
+                break;
+              }
               const newTr = new Transaction({
                 title: newTransaction.title,
                 amount: newTransaction.amount,
@@ -98,11 +107,15 @@ async function createTransaction(req, res) {
                 userId: userId
               });
               transactions.push(newTr);
+              i += 1;
             }
             break;
           case "M":
-            for (let i = 1; i < 12; i++) {
-              const newDate = new Date(newTransaction.executionDate.getFullYear(), newTransaction.executionDate.getMonth() + i, newTransaction.executionDate.getDate());
+            while(true) {
+              const newDate = moment(transactionDate).add(i,'months');
+              if (newDate > endRepeatDate) {
+                break;
+              }
               const newTr = new Transaction({
                 title: newTransaction.title,
                 amount: newTransaction.amount,
@@ -114,11 +127,15 @@ async function createTransaction(req, res) {
                 userId: userId
               });
               transactions.push(newTr);
+              i += 1;
             }
             break;
           case "Y":
-            for (let i = 0; i < 5; i++) {
-              const newDate = new Date(newTransaction.executionDate.getFullYear() + i, newTransaction.executionDate.getMonth(), newTransaction.executionDate.getDate());
+            while(true) {
+              const newDate = moment(transactionDate).add(i, 'years');
+              if (newDate > endRepeatDate) {
+                break;
+              }
               const newTr = new Transaction({
                 title: newTransaction.title,
                 amount: newTransaction.amount,
@@ -130,6 +147,7 @@ async function createTransaction(req, res) {
                 userId: userId
               });
               transactions.push(newTr);
+              i += 1;
             }
             break;
         

@@ -1,10 +1,9 @@
-import { Transaction } from './../../../transactions/models/transaction.model';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TransactionService } from '@features/transactions/services/transaction.service';
-import { TransactionTypes } from '@features/transactions/consts/transactionTypes';
-
+import { TransactionTags } from '@features/transactions/constants/transactionTags';
+import * as moment from 'moment';
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
@@ -18,17 +17,19 @@ export class FormComponent implements OnInit {
     private readonly cd: ChangeDetectorRef
   ) { }
 
-
+  
   titleError: string = '';
   amountError: string = '';
   amount: any;
-  TransactionTypes = TransactionTypes;
+  TransactionTags = TransactionTags;
+  
 
   transactionForm = new FormGroup({
     title: new FormControl('', Validators.required),
     amount: new FormControl(null, Validators.required),
-    executionDate: new FormControl(this._formatDate(new Date()), Validators.required),
+    executionDate: new FormControl(moment().format('YYYY-MM-DD'), Validators.required),
     repeat: new FormControl(''),
+    endDate: new FormControl(moment().format('YYYY-MM-DD')),
     tags: new FormControl(null),
     description: new FormControl(''),
   })
@@ -46,7 +47,7 @@ export class FormComponent implements OnInit {
   onSubmit(): void {
     this.titleError = '';
     this.amountError = '';
-
+    
     const transaction = this.transactionForm.getRawValue();
 
     if (!transaction.title || !transaction.amount) {
@@ -77,6 +78,8 @@ export class FormComponent implements OnInit {
       transaction.tags = transaction.tags.label;
     }
 
+    transaction.executionDate = moment(transaction.executionDate);
+
     this.transactionService.createTransaction(transaction).subscribe(
       (res: any) => {
         // console.log(res);
@@ -88,11 +91,6 @@ export class FormComponent implements OnInit {
       }
     );
 
-  }
-
-  private _formatDate(date) {
-    let newDate = new Date(date);
-    return newDate.toJSON().split('T')[0];
   }
 
 }
