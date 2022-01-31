@@ -80,9 +80,6 @@ export class FormComponent implements OnInit {
       transaction.tags = transaction.tags.label;
     }
 
-    console.log(transaction.executionDate);
-    transaction.executionDate = moment(transaction.executionDate);
-
     this.transactionService.createTransaction(transaction).subscribe(
       (res: any) => {
         // console.log(res);
