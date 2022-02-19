@@ -21,17 +21,24 @@ export class TagDistributionGraphComponent implements OnInit {
   data_inc = [];
   data_exp = [];
 
-  year: string = moment().year().toString();
-
+  year: number = moment().year();
+  month: number = moment().month() + 1;
+  
   ngOnInit(): void {
-    this._fetchYearData(this.year);
-    this.title_inc += this.year;
-    this.title_exp += this.year;
+    const year: string = this.year.toString();
+    const month: any = (this.month < 10) ? (`0${this.month}`) : this.month;
+    const thisMonth = `${year}-${month}`;
+
+    this._fetchYearData(thisMonth);
+    const monthOfYear: string = `${moment().format('MMMM')} ${year}`;
+    this.title_inc += monthOfYear;
+    this.title_exp += monthOfYear;
   }
 
-  private _fetchYearData(year: string) {
-    this.transactionService.getDetailByYear(year).subscribe(
+  private _fetchYearData(yearMonth: string) {
+    this.transactionService.getDetailByMonth(yearMonth).subscribe(
       (transactions: any) => {
+
         transactions.forEach((tr: Transaction) => {
           tr.tags = tr.tags ? tr.tags : 'Other';
           let dt: any = [];
