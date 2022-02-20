@@ -20,6 +20,11 @@ export const TransactionExpenseTags =  [
     icon: '🧾'
   },
   {
+    label: 'Car',
+    color: '#',
+    icon: '🚙'
+  },
+  {
     label: 'Tech',
     color: '#',
     icon: '📱'

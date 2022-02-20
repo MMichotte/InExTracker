@@ -2,7 +2,7 @@ export const TransactionRevenueTags =  [
   {
     label: 'Salary',
     color: '#43cc04',
-    icon: '💶'
+    icon: '💰'
   },
   {
     label: 'Rent',
@@ -18,7 +18,7 @@ export const TransactionRevenueTags =  [
   {
     label: 'Donation',
     color: '#',
-    icon: '💰'
+    icon: '💶'
   },
   {
     label: 'Other',

@@ -139,7 +139,8 @@ export class FormComponent implements OnInit {
   }
   
   private _submitUpdate(transaction): void {
-    this.transactionService.updateTransaction(this.currentTransaction._id, transaction).subscribe(
+    const id = this.currentTransaction.initialTransactionId ? this.currentTransaction.initialTransactionId : this.currentTransaction._id;
+    this.transactionService.updateTransaction(id, transaction).subscribe(
       (res: any) => {
         // console.log(res);
         this.router.navigate(['/home']);

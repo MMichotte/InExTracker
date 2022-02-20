@@ -5,10 +5,11 @@ export class Transaction {
   title: string;
   amount: number;
   executionDate: Date;
-  endDate: Date;
-  repeat: ETransactionRepeat;
-  description: string;
-  tags: any;
+  endDate?: Date;
+  repeat?: ETransactionRepeat;
+  initialTransactionId?: string;
+  description?: string;
+  tags?: any;
   userId: string;
 
   constructor(obj?: Transaction) {

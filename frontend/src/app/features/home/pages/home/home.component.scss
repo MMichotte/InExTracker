@@ -48,22 +48,24 @@
 
         .col-title {
           flex-grow: 1;
-          max-width: 48%;
+          max-width: 75%;
           text-align: left;
           white-space: nowrap;
           overflow-x: hidden;
         }
         
         .col-date {
-          width: 5.5rem;
+          min-width: 5.5rem;
           text-align: left;
           margin-right: 0.3rem;
+          white-space: nowrap;
         }
 
         .col-amount {
           width: 6rem;
           text-align: end;
           margin-left: 0.3rem;
+          white-space: nowrap;
         }
       }
 

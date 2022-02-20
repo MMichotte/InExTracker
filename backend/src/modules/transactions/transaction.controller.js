@@ -187,9 +187,10 @@ async function createTransaction(req, res) {
 }
 
 async function updateTransaction(req, res ) {
-  await transactionService.updateOne(req.params.transactionId, req.body);
   if (req.body.repeat) {
-    await transactionService.updateMany(req.params.transactionId, req.body);
+    await transactionService.updateMany(req.params.initialTransactionId, req.body);
+  } else {
+    await transactionService.updateOne(req.params.initialTransactionId, req.body);
   }
   res.status(200).send([]); //TODO
 }

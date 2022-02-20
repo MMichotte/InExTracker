@@ -13,7 +13,7 @@ transactionRoutes.get(`${routePrefix}/yearMonth/:yearMonth`, auth, transactionCo
 transactionRoutes.get(`${routePrefix}/month-balance/:yearMonth`, auth, transactionController.getCurrentMonthBalance); 
 transactionRoutes.get(`${routePrefix}/general-balance/:yearMonth`, auth, transactionController.getGeneralBalance); 
 transactionRoutes.post(`${routePrefix}`, auth, transactionController.createTransaction); 
-transactionRoutes.patch(`${routePrefix}/:transactionId`, auth, transactionController.updateTransaction); 
+transactionRoutes.patch(`${routePrefix}/:initialTransactionId`, auth, transactionController.updateTransaction); 
 transactionRoutes.delete(`${routePrefix}`, auth, transactionController.deleteTransaction); 
 
 export default transactionRoutes;

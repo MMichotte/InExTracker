@@ -66,12 +66,17 @@ async function createOne(transaction) {
 }
 
 async function updateOne(id, transaction) {
-  return await Transaction.updateOne({_id: id}, transaction);
+  return await Transaction.updateOne({ _id: id }, transaction);
 }
 
 async function updateMany(id, transaction) {
   return await Transaction.updateMany(
-    { initialTransactionId: id}, 
+    {
+      $or: [
+        { _id: id },
+        { initialTransactionId: id }
+      ]
+    },
     {
       title: transaction.title,
       amount: transaction.amount,
