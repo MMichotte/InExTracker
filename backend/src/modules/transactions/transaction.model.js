@@ -16,6 +16,10 @@ const TransactionSchema = mongoose.Schema({
     type: Date,
     default: moment()
   },
+  endDate: {
+    type: Date,
+    require: false
+  },
   repeat: {
     type: String,
     enum: transactionRepeat,
@@ -31,8 +35,19 @@ const TransactionSchema = mongoose.Schema({
     require: false,
   },
   tags: {
-    type: String,
-    require: false,
+    label: {
+      type: String,
+      require: false
+    },
+    color: {
+      type: String,
+      require: false
+    },
+    icon: {
+      type: String,
+      require: false
+    } ,
+    require: false
   },
   userId: {
     type: mongoose.Schema.Types.ObjectId,

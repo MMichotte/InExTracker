@@ -40,7 +40,7 @@ export class TagDistributionGraphComponent implements OnInit {
       (transactions: any) => {
 
         transactions.forEach((tr: Transaction) => {
-          tr.tags = tr.tags ? tr.tags : 'Other';
+          tr.tags = tr.tags ? `${tr.tags.icon}  ${tr.tags.label}` : '🗃 Other';
           let dt: any = [];
           if (tr.amount >= 0) {
             dt = this.data_inc;

@@ -5,6 +5,10 @@ async function getAllByUserId(userId) {
   return await Transaction.find({ userId: userId });
 }
 
+async function getOne(transactionId) {
+  return await Transaction.find({ _id: transactionId });
+}
+
 async function getAllByUserIdAndYear(userId, year) {
   return await Transaction.find({
     userId: userId,
@@ -58,13 +62,17 @@ async function getGeneralBalanceByUserId(userId, yearMonth) {
 }
 
 async function createOne(transaction) {
-  return await transaction.save()
+  return await transaction.save();
+}
+
+async function updateOne(id, transaction) {
+  return await Transaction.updateOne({_id: id}, transaction);
 }
 
 async function deleteTransaction(transaction) {
   return await Transaction.deleteOne({
     _id: transaction._id
-  })
+  });
 }
 async function deleteAllTransaction(transaction) {
   const initTrId = transaction.initialTransactionId ? transaction.initialTransactionId : transaction._id;
@@ -82,4 +90,4 @@ async function deleteAllTransaction(transaction) {
   return [];
 }
 
-export { getAllByUserId, getAllByUserIdAndYear, getAllByUserIdAndMonth, getCurrentMonthBalanceByUserId, getGeneralBalanceByUserId, createOne, deleteTransaction, deleteAllTransaction }
+export { getAllByUserId, getOne, getAllByUserIdAndYear, getAllByUserIdAndMonth, getCurrentMonthBalanceByUserId, getGeneralBalanceByUserId, createOne, updateOne, deleteTransaction, deleteAllTransaction }

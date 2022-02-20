@@ -20,6 +20,10 @@ export class TransactionService {
   getDetailAll(): any {
     return this.httpClient.get(`${this.endpoint}`);
   }
+  
+  getDetailOne(id: string): any {
+    return this.httpClient.get(`${this.endpoint}/${id}`);
+  }
 
   getDetailByYear(year: string): any {
     return this.httpClient.get(`${this.endpoint}/year/${year}`);
@@ -31,6 +35,10 @@ export class TransactionService {
 
   createTransaction(transaction: any): any {
     return this.httpClient.post(`${this.endpoint}`, transaction);
+  }
+  
+  updateTransaction(id:string, transaction: any): any {
+    return this.httpClient.patch(`${this.endpoint}/${id}`, transaction);
   }
   
   deleteTransaction(transaction: any, deleteAll: boolean): any {

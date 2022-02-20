@@ -11,6 +11,11 @@ async function getAllFromUserTransaction(req, res) {
   res.send(await transactionService.getAllByUserId(userId));
 }
 
+async function getOneTransaction(req, res) {
+  // #swagger.tags = ['Transactions']
+  res.send(await transactionService.getOne(req.params.transactionId));
+}
+
 async function getAllFromUserByYearTransaction(req, res) {
   // #swagger.tags = ['Transactions']
   const userId = JWTService.decodeJWT(req.headers['authorization']).user_id;
@@ -53,6 +58,7 @@ async function createTransaction(req, res) {
     title: title,
     amount: amount,
     executionDate: moment(executionDate),
+    endDate: endRepeatDate,
     repeat: repeat,
     description: description,
     tags: tags,
@@ -79,6 +85,7 @@ async function createTransaction(req, res) {
                 title: newTransaction.title,
                 amount: newTransaction.amount,
                 executionDate: newDate,
+                endDate: endRepeatDate,
                 repeat: newTransaction.repeat,
                 initialTransactionId: initialTransactionId,
                 description: newTransaction.description,
@@ -99,6 +106,7 @@ async function createTransaction(req, res) {
                 title: newTransaction.title,
                 amount: newTransaction.amount,
                 executionDate: newDate,
+                endDate: endRepeatDate,
                 repeat: newTransaction.repeat,
                 initialTransactionId: initialTransactionId,
                 description: newTransaction.description,
@@ -118,6 +126,7 @@ async function createTransaction(req, res) {
               const newTr = new Transaction({
                 title: newTransaction.title,
                 amount: newTransaction.amount,
+                endDate: endRepeatDate,
                 executionDate: newDate,
                 repeat: newTransaction.repeat,
                 initialTransactionId: initialTransactionId,
@@ -138,6 +147,7 @@ async function createTransaction(req, res) {
               const newTr = new Transaction({
                 title: newTransaction.title,
                 amount: newTransaction.amount,
+                endDate: endRepeatDate,
                 executionDate: newDate,
                 repeat: newTransaction.repeat,
                 initialTransactionId: initialTransactionId,
@@ -176,6 +186,10 @@ async function createTransaction(req, res) {
 
 }
 
+async function updateTransaction(req, res ) {
+  res.send(await transactionService.updateOne(req.params.transactionId, req.body));
+}
+
 async function deleteTransaction(req, res) {
   // #swagger.tags = ['Transactions']
 
@@ -190,4 +204,4 @@ async function deleteTransaction(req, res) {
 
 }
 
-export { getAllFromUserTransaction, getAllFromUserByYearTransaction, getAllFromUserByMonthTransaction, getCurrentMonthBalance, getGeneralBalance, createTransaction, deleteTransaction }
+export { getAllFromUserTransaction, getOneTransaction, getAllFromUserByYearTransaction, getAllFromUserByMonthTransaction, getCurrentMonthBalance, getGeneralBalance, createTransaction, updateTransaction, deleteTransaction }

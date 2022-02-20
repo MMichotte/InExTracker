@@ -105,6 +105,10 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['home/add'])
   }
 
+  public onEdit(): void {
+    this.router.navigate([`home/edit/${this.selectedEntry._id}`]);
+  }
+
   public onDelete(): void {
     if (this.selectedEntry.repeat) {
       this.showModal = true;
