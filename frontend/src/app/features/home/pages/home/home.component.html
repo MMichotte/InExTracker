@@ -26,11 +26,10 @@
     <div class="content">
       <ul id="income-list">
         <li class="entry" *ngFor="let tr of incomes" (click)="setSelectedEntry(tr)" [ngClass]="{'selected-entry' : (selectedEntry == tr)}">
-          <span class="col-date">{{tr.executionDate | date: 'EE dd'}} </span>
-          <div class="col-title" [ngClass]="{'animated' : (selectedEntry == tr)}">
+          <span class="col-date">{{tr.executionDate | date: 'EE dd'}} <span class="tag-icon" *ngIf="tr.repeat">🗓</span></span>
+          <div class="col-title" [ngClass]="{'animated' : (selectedEntry == tr && selectedEntryOverflow)}" (click)="checkOverflow($event.currentTarget)">
             <span>
-              <span class="tag-icon" *ngIf="tr.repeat">🗓</span>
-              <span class="tag-icon">{{tr.tags.icon}}</span>
+              <span class="tag-icon">{{tr.tags?.icon}}</span>
               {{tr.title}}
             </span>
           </div>
@@ -48,11 +47,10 @@
     <div class="content">
       <ul id="expense-list">
         <li class="entry" *ngFor="let tr of expenses" (click)="setSelectedEntry(tr)" [ngClass]="{'selected-entry' : (selectedEntry == tr)}">
-          <span class="col-date">{{tr.executionDate | date: 'EE dd'}} </span>
-          <div class="col-title" [ngClass]="{'animated' : (selectedEntry == tr)}">
+          <span class="col-date">{{tr.executionDate | date: 'EE dd'}} <span class="tag-icon" *ngIf="tr.repeat">🗓</span> </span>
+          <div class="col-title" [ngClass]="{'animated' : (selectedEntry == tr && selectedEntryOverflow)}" (click)="checkOverflow($event.currentTarget)">
             <span>
-              <span class="tag-icon" *ngIf="tr.repeat">🗓</span>
-              <span class="tag-icon">{{tr.tags.icon}}</span>
+              <span class="tag-icon">{{tr.tags?.icon}}</span>
               {{tr.title}}
             </span>
           </div>

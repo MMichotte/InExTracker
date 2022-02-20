@@ -71,9 +71,9 @@ export class FormComponent implements OnInit {
 
   private _findTag(tag: any) {
     let foundTag = null;
-    foundTag = this.TransactionExpenseTags.find(t => { return t.label == tag.label});
+    foundTag = this.TransactionExpenseTags.find(t => { return t.label == tag?.label});
     if (!foundTag) {
-      foundTag = this.TransactionRevenueTags.find(t => { return t.label == tag.label});
+      foundTag = this.TransactionRevenueTags.find(t => { return t.label == tag?.label});
     }
     return foundTag;
   }

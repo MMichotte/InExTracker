@@ -1,6 +1,6 @@
 import { Transaction } from './../../../transactions/models/transaction.model';
 import { TransactionService } from './../../../transactions/services/transaction.service';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
 import { SimpleBalanceDTO } from '@features/transactions/dto/simple-balance.dto';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
@@ -21,7 +21,10 @@ export class HomeComponent implements OnInit {
   incomes: any = [];
 
   selectedEntry: any = null;
+  selectedEntryOverflow: boolean = false;
   showModal: boolean = false;
+
+
 
   constructor(
     private readonly transactionService: TransactionService,
@@ -138,4 +141,7 @@ export class HomeComponent implements OnInit {
     this._getDetailByMonth();
   }
 
+  public checkOverflow(element) {
+    this.selectedEntryOverflow = (element.offsetHeight < element.scrollHeight || element.offsetWidth < element.scrollWidth);
+  }
 }

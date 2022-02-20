@@ -47,7 +47,7 @@
         }
 
         .col-title {
-          //flex-grow: 1;
+          flex-grow: 1;
           max-width: 48%;
           text-align: left;
           white-space: nowrap;
@@ -55,7 +55,7 @@
         }
         
         .col-date {
-          width: 4rem;
+          width: 5.5rem;
           text-align: left;
           margin-right: 0.3rem;
         }
@@ -149,7 +149,7 @@ li.entry:hover {
 
 
 .animated {
-  overflow: hidden;
+  
   white-space: nowrap;
 }
 

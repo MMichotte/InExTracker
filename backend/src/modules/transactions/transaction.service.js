@@ -69,6 +69,18 @@ async function updateOne(id, transaction) {
   return await Transaction.updateOne({_id: id}, transaction);
 }
 
+async function updateMany(id, transaction) {
+  return await Transaction.updateMany(
+    { initialTransactionId: id}, 
+    {
+      title: transaction.title,
+      amount: transaction.amount,
+      tags: transaction.tags,
+      description: transaction.description
+    }
+  );
+}
+
 async function deleteTransaction(transaction) {
   return await Transaction.deleteOne({
     _id: transaction._id
@@ -90,4 +102,4 @@ async function deleteAllTransaction(transaction) {
   return [];
 }
 
-export { getAllByUserId, getOne, getAllByUserIdAndYear, getAllByUserIdAndMonth, getCurrentMonthBalanceByUserId, getGeneralBalanceByUserId, createOne, updateOne, deleteTransaction, deleteAllTransaction }
+export { getAllByUserId, getOne, getAllByUserIdAndYear, getAllByUserIdAndMonth, getCurrentMonthBalanceByUserId, getGeneralBalanceByUserId, createOne, updateOne, updateMany, deleteTransaction, deleteAllTransaction }
