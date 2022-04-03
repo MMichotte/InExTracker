@@ -11,7 +11,7 @@ import * as moment from 'moment';
 export class TagDistributionGraphComponent implements OnInit {
 
   @Input() viewType: string;
-
+  
   constructor(
     private readonly transactionService: TransactionService
   ) { }
@@ -23,6 +23,8 @@ export class TagDistributionGraphComponent implements OnInit {
   data_inc = [];
   data_exp = [];
 
+  selectedMonth: string = "";
+
   year: number = moment().year();
   month: number = moment().month() + 1;
   
@@ -30,6 +32,7 @@ export class TagDistributionGraphComponent implements OnInit {
     const thisYear: string = this.year.toString();
     const thisMonth: any = (this.month < 10) ? (`0${this.month}`) : this.month;
     const thisYearMonth = `${thisYear}-${thisMonth}`;
+    this.selectedMonth = thisYearMonth;
 
     if (this.viewType === 'year') {
       this._fetchYearData(thisYear);
@@ -37,11 +40,18 @@ export class TagDistributionGraphComponent implements OnInit {
       this.title_exp += thisYear;
     } else {
       this._fetchMonthData(thisYearMonth);
-      const monthOfYear: string = `${moment().format('MMMM')} ${thisYear}`;
+      const monthOfYear: string = `${moment(thisYearMonth).format('MMMM')} ${thisYear}`;
       this.title_inc += monthOfYear;
       this.title_exp += monthOfYear;
     }
 
+  }
+
+  public setDate(value: string): void {
+    this.selectedMonth = value;
+    this.data_exp = [];
+    this.data_inc = [];
+    this._fetchMonthData(this.selectedMonth);
   }
 
   private _fetchYearData(year: string) {

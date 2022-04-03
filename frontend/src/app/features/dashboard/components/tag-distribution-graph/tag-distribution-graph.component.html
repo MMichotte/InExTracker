@@ -1,3 +1,7 @@
+<div class="control" *ngIf="viewType != 'year'">
+   <input type="month" name="datePicker" id="datePicker" [value]="selectedMonth" (change)="setDate($event.target.value)">
+</div>
+
 <div class="charts">
    <google-chart *ngIf="data_inc.length !== 0" [title]="title_inc" [type]="type" [data]="data_inc" class="chart">
    </google-chart>

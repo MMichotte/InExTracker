@@ -85,7 +85,7 @@
 
 
     <div class="btn-group">
-      <button class="button is-danger" type="" routerLink="/home">Cancel</button>
+      <button class="button is-danger" type="" (click)="onCancel()">Cancel</button>
       <button class="button is-warning" type="submit" (click)="setTransactionType('expense')" *ngIf="!currentTransaction">Expense</button>
       <button class="button is-primary" type="submit" (click)="setTransactionType('revenue')" *ngIf="!currentTransaction">Revenue</button>
       <button class="button is-warning" type="submit" *ngIf="currentTransaction">Update</button>

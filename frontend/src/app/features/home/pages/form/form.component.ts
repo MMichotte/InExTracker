@@ -21,13 +21,14 @@ export class FormComponent implements OnInit {
     private readonly cd: ChangeDetectorRef
   ) { }
 
-  
   titleError: string = '';
   amountError: string = '';
   amount: any;
   TransactionExpenseTags = TransactionExpenseTags;
   TransactionRevenueTags = TransactionRevenueTags;
   currentTransaction: Transaction = null;
+
+  selectedMonth: string = "";
 
   transactionForm = new FormGroup({
     title: new FormControl('', Validators.required),
@@ -44,6 +45,8 @@ export class FormComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     const transactionId = this.route.snapshot.params.id;
+    this.selectedMonth = this.route.snapshot.params.selectedMonth;
+    console.log(this.selectedMonth);
     if (transactionId) {
       try {
         this.currentTransaction = (await this.transactionService.getDetailOne(transactionId).toPromise())[0];
@@ -66,6 +69,11 @@ export class FormComponent implements OnInit {
         console.log(e);
         this.router.navigate(['/home']);
       }
+    }
+    else if (this.selectedMonth && this.selectedMonth != "") {
+      this.transactionForm.patchValue({
+        executionDate: moment(this.selectedMonth).format('YYYY-MM-DD'),
+      });
     }
   }
 
@@ -124,12 +132,16 @@ export class FormComponent implements OnInit {
 
   }
 
+  onCancel(): void {
+    this.router.navigate(['/home', {selectedMonth: this.selectedMonth}]);
+  }
+
   private _submitCreate(transaction): void {
   
     this.transactionService.createTransaction(transaction).subscribe(
       (res: any) => {
         // console.log(res);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/home', {selectedMonth: this.selectedMonth}]);
       },
       (error: any) => {
         console.log(error);
@@ -143,7 +155,7 @@ export class FormComponent implements OnInit {
     this.transactionService.updateTransaction(id, transaction).subscribe(
       (res: any) => {
         // console.log(res);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/home', {selectedMonth: this.selectedMonth}]);
       },
       (error: any) => {
         console.log(error);

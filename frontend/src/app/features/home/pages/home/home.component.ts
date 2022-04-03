@@ -2,7 +2,7 @@ import { Transaction } from './../../../transactions/models/transaction.model';
 import { TransactionService } from './../../../transactions/services/transaction.service';
 import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
 import { SimpleBalanceDTO } from '@features/transactions/dto/simple-balance.dto';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 
 @Component({
@@ -28,7 +28,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private readonly transactionService: TransactionService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
   ) {
     document.body.addEventListener('click', (e: any) => {
       if(e.target.tagName !== 'LI' && e.target.tagName !== 'BUTTON' && e.target.tagName !== 'I') {
@@ -38,9 +39,12 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let month: any = this.date.month() + 1;
-    month = (month < 10) ? (`0${month}`) : month;
-    this.selectedMonth = `${this.date.year()}-${month}`;
+    this.selectedMonth = this.route.snapshot.params.selectedMonth;
+    if (!this.selectedMonth || this.selectedMonth == "") {
+      let month: any = this.date.month() + 1;
+      month = (month < 10) ? (`0${month}`) : month;
+      this.selectedMonth = `${this.date.year()}-${month}`;
+    }
     
     this._refreshData();
   }
@@ -105,11 +109,11 @@ export class HomeComponent implements OnInit {
 
 
   public onAdd(): void {
-    this.router.navigate(['home/add'])
+    this.router.navigate(['home/add', {selectedMonth: this.selectedMonth}])
   }
 
   public onEdit(): void {
-    this.router.navigate([`home/edit/${this.selectedEntry._id}`]);
+    this.router.navigate([`home/edit/${this.selectedEntry._id}`, {selectedMonth: this.selectedMonth}]);
   }
 
   public onDelete(): void {
