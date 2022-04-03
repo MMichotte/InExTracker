@@ -16,8 +16,12 @@ export class TagDistributionGraphComponent implements OnInit {
     private readonly transactionService: TransactionService
   ) { }
 
-  title_inc = 'Income Distribution of ';
-  title_exp = 'Expense Distribution of ';
+
+  
+  title_inc_base = 'Income Distribution of ';
+  title_exp_base = 'Expense Distribution of ';
+  title_inc = '';
+  title_exp = '';
   type = 'PieChart';
 
   data_inc = [];
@@ -36,13 +40,13 @@ export class TagDistributionGraphComponent implements OnInit {
 
     if (this.viewType === 'year') {
       this._fetchYearData(thisYear);
-      this.title_inc += thisYear;
-      this.title_exp += thisYear;
+      this.title_inc = `${this.title_inc_base} ${thisYear}`;
+      this.title_exp = `${this.title_exp_base} ${thisYear}`;
     } else {
       this._fetchMonthData(thisYearMonth);
       const monthOfYear: string = `${moment(thisYearMonth).format('MMMM')} ${thisYear}`;
-      this.title_inc += monthOfYear;
-      this.title_exp += monthOfYear;
+      this.title_inc = `${this.title_inc_base} ${monthOfYear}`;
+      this.title_exp = `${this.title_exp_base} ${monthOfYear}`;
     }
 
   }
@@ -51,6 +55,9 @@ export class TagDistributionGraphComponent implements OnInit {
     this.selectedMonth = value;
     this.data_exp = [];
     this.data_inc = [];
+    const monthOfYear: string = `${moment(this.selectedMonth).format('MMMM')} ${this.selectedMonth.split('-')[0]}`;
+    this.title_inc = `${this.title_inc_base} ${monthOfYear}`;
+    this.title_exp = `${this.title_exp_base} ${monthOfYear}`;
     this._fetchMonthData(this.selectedMonth);
   }
 
