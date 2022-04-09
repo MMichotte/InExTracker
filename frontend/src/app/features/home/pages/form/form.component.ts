@@ -46,7 +46,6 @@ export class FormComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     const transactionId = this.route.snapshot.params.id;
     this.selectedMonth = this.route.snapshot.params.selectedMonth;
-    console.log(this.selectedMonth);
     if (transactionId) {
       try {
         this.currentTransaction = (await this.transactionService.getDetailOne(transactionId).toPromise())[0];
@@ -71,9 +70,15 @@ export class FormComponent implements OnInit {
       }
     }
     else if (this.selectedMonth && this.selectedMonth != "") {
-      this.transactionForm.patchValue({
-        executionDate: moment(this.selectedMonth).format('YYYY-MM-DD'),
-      });
+      if (+this.selectedMonth.split('-')[1] == moment().month() + 1) {
+        this.transactionForm.patchValue({
+          executionDate: moment().format('YYYY-MM-DD'),
+        });
+      } else {
+        this.transactionForm.patchValue({
+          executionDate: moment(this.selectedMonth).format('YYYY-MM-DD'),
+        });
+      }
     }
   }
 
