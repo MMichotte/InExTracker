@@ -75,7 +75,10 @@ async function updateMany(id, transaction) {
       $or: [
         { _id: id },
         { initialTransactionId: id }
-      ]
+      ],
+      executionDate: {
+        $gte: moment().subtract(1, 'days'),
+      }
     },
     {
       title: transaction.title,
@@ -107,4 +110,16 @@ async function deleteAllTransaction(transaction) {
   return [];
 }
 
-export { getAllByUserId, getOne, getAllByUserIdAndYear, getAllByUserIdAndMonth, getCurrentMonthBalanceByUserId, getGeneralBalanceByUserId, createOne, updateOne, updateMany, deleteTransaction, deleteAllTransaction }
+export {
+  getAllByUserId,
+  getOne,
+  getAllByUserIdAndYear,
+  getAllByUserIdAndMonth,
+  getCurrentMonthBalanceByUserId,
+  getGeneralBalanceByUserId,
+  createOne,
+  updateOne,
+  updateMany,
+  deleteTransaction,
+  deleteAllTransaction
+}
